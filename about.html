@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — The Agency Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --blueprint: #1a2744;
+    --blueprint-mid: #2d4070;
+    --blueprint-light: #4a6094;
+    --paper: #f4f0e6;
+    --paper-dark: #e8e2d4;
+    --paper-mid: #ede8db;
+    --ink: #1a2744;
+    --ink-light: #4a5568;
+    --amber: #c17d3c;
+    --grid-color: rgba(26, 39, 68, 0.07);
+    --line-color: rgba(26, 39, 68, 0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+      linear-gradient(var(--grid-color) 0.5px, transparent 0.5px),
+      linear-gradient(90deg, var(--grid-color) 0.5px, transparent 0.5px);
+    background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(244, 240, 230, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line-color);
+  }
+
+  .nav-mark {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blueprint);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+  }
+
+  .nav-mark::before {
+    content: '';
+    display: block;
+    width: 28px; height: 28px;
+    border: 2px solid var(--blueprint);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--blueprint); }
+
+  .nav-cta {
+    color: var(--paper) !important;
+    background: var(--blueprint);
+    padding: 0.5rem 1.2rem;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--blueprint-mid) !important; }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    position: relative;
+    z-index: 1;
+    padding-top: 80px;
+    border-bottom: 1px solid var(--line-color);
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    min-height: 42vh;
+  }
+
+  .header-sidebar {
+    border-right: 1px solid var(--line-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem 2rem;
+  }
+
+  .sidebar-classification {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+    opacity: 0.6;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    align-self: center;
+  }
+
+  .sidebar-sheet {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: var(--blueprint-light);
+    opacity: 0.5;
+    line-height: 2;
+  }
+
+  .header-content {
+    padding: 4rem 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+  }
+
+  .header-content::before {
+    content: 'DOCUMENT: TAB-ABOUT / CLEARED FOR PUBLIC';
+    position: absolute;
+    top: 3rem;
+    left: 5rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    opacity: 0.7;
+  }
+
+  .page-eyebrow {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .page-eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--amber);
+  }
+
+  .page-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.0;
+    color: var(--blueprint);
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title em { font-style: italic; color: var(--blueprint-mid); }
+
+  .page-standfirst {
+    font-size: 1.2rem;
+    color: var(--ink-light);
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* ─── MAIN BODY ─── */
+  .about-body {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 180px 1fr 340px;
+  }
+
+  .body-sidebar {
+    border-right: 1px solid var(--line-color);
+    padding: 4rem 0;
+    position: sticky;
+    top: 80px;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+  }
+
+  .sidebar-nav {
+    list-style: none;
+    padding: 0 1.5rem;
+  }
+
+  .sidebar-nav li {
+    margin-bottom: 0.2rem;
+  }
+
+  .sidebar-nav a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    opacity: 0.5;
+    transition: opacity 0.2s, color 0.2s;
+    display: block;
+    padding: 0.4rem 0;
+    border-left: 2px solid transparent;
+    padding-left: 0.8rem;
+  }
+
+  .sidebar-nav a:hover,
+  .sidebar-nav a.active {
+    opacity: 1;
+    color: var(--blueprint);
+    border-left-color: var(--amber);
+  }
+
+  /* Main text column */
+  .body-main {
+    padding: 5rem;
+    border-right: 1px solid var(--line-color);
+  }
+
+  .chapter {
+    margin-bottom: 5rem;
+    padding-bottom: 5rem;
+    border-bottom: 1px solid var(--line-color);
+  }
+
+  .chapter:last-child {
+    border-bottom: none;
+  }
+
+  .chapter-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .chapter-num::before {
+    content: '';
+    display: block;
+    width: 18px; height: 1px;
+    background: var(--amber);
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+    line-height: 1.15;
+    color: var(--blueprint);
+    margin-bottom: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { font-style: italic; }
+
+  .body-text {
+    font-size: 1.08rem;
+    color: var(--ink-light);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .body-text p { margin-bottom: 1.4rem; }
+
+  .body-text p:last-child { margin-bottom: 0; }
+
+  .body-text strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .body-text em {
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  /* Pull quote inline */
+  .inline-pull {
+    border-left: 3px solid var(--amber);
+    padding: 1.2rem 2rem;
+    margin: 2.5rem 0;
+    background: rgba(26, 39, 68, 0.03);
+  }
+
+  .inline-pull p {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    line-height: 1.4;
+    color: var(--blueprint);
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* Timeline */
+  .timeline {
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 1px;
+    background: var(--line-color);
+  }
+
+  .timeline-item {
+    padding: 0 0 2rem 2.5rem;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 0.55rem;
+    width: 9px; height: 9px;
+    border: 1.5px solid var(--blueprint);
+    background: var(--paper);
+    transform: rotate(45deg);
+  }
+
+  .timeline-year {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-text {
+    font-size: 0.98rem;
+    color: var(--ink-light);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .timeline-text strong { color: var(--ink); font-weight: 600; }
+
+  /* Principles grid */
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--line-color);
+    margin-top: 2rem;
+  }
+
+  .principle-item {
+    padding: 2rem;
+    border-right: 1px solid var(--line-color);
+    border-bottom: 1px solid var(--line-color);
+    transition: background 0.2s;
+  }
+
+  .principle-item:hover { background: rgba(26, 39, 68, 0.03); }
+  .principle-item:nth-child(2n) { border-right: none; }
+  .principle-item:nth-last-child(-n+2) { border-bottom: none; }
+
+  .principle-mark {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.6rem;
+  }
+
+  .principle-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.15rem;
+    color: var(--blueprint);
+    margin-bottom: 0.6rem;
+  }
+
+  .principle-body {
+    font-size: 0.92rem;
+    color: var(--ink-light);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ─── RIGHT PANEL ─── */
+  .body-aside {
+    padding: 5rem 3rem;
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+  }
+
+  .aside-block {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--line-color);
+  }
+
+  .aside-block:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .aside-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+    margin-bottom: 1.2rem;
+    opacity: 0.6;
+  }
+
+  .aside-fact {
+    margin-bottom: 1rem;
+  }
+
+  .fact-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    color: var(--blueprint);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+
+  .fact-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    opacity: 0.6;
+  }
+
+  .aside-list {
+    list-style: none;
+  }
+
+  .aside-list li {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--line-color);
+    display: flex;
+    gap: 0.8rem;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .aside-list li::before {
+    content: '—';
+    color: var(--amber);
+    flex-shrink: 0;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+  }
+
+  .aside-list li:last-child { border-bottom: none; }
+
+  .aside-cta {
+    display: block;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--blueprint);
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 1.5rem;
+    transition: background 0.2s;
+  }
+
+  .aside-cta:hover { background: var(--blueprint-mid); }
+
+  /* ─── CLOSING STATEMENT ─── */
+  .closing {
+    position: relative;
+    z-index: 1;
+    border-top: 2px solid var(--blueprint);
+    background: var(--blueprint);
+    padding: 6rem 5rem;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+  }
+
+  .closing-sidebar {
+    border-right: 1px solid rgba(244,240,230,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .closing-sidebar span {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244,240,230,0.3);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .closing-content {
+    padding: 0 5rem;
+  }
+
+  .closing-content .chapter-num {
+    color: rgba(244,240,230,0.4);
+  }
+
+  .closing-content .chapter-num::before {
+    background: rgba(244,240,230,0.2);
+  }
+
+  .closing-content h2 {
+    color: var(--paper);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    margin-bottom: 2rem;
+  }
+
+  .closing-content h2 em { color: rgba(244,240,230,0.6); }
+
+  .closing-content p {
+    font-size: 1.1rem;
+    color: rgba(244,240,230,0.65);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 560px;
+    margin-bottom: 1.2rem;
+  }
+
+  .closing-content p strong { color: var(--paper); font-weight: 400; }
+
+  .closing-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-light {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blueprint);
+    background: var(--paper);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+
+  .btn-light:hover { background: var(--paper-dark); }
+
+  .btn-ghost {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,240,230,0.7);
+    background: transparent;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid rgba(244,240,230,0.25);
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(244,240,230,0.6);
+    color: var(--paper);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(244,240,230,0.1);
+    background: var(--blueprint);
+    padding: 2rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-mark {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,240,230,0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .footer-mark::before {
+    content: '';
+    display: block;
+    width: 18px; height: 18px;
+    border: 1px solid rgba(244,240,230,0.25);
+    transform: rotate(45deg);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,240,230,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: rgba(244,240,230,0.7); }
+
+  /* ─── REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1100px) {
+    .about-body { grid-template-columns: 1fr; }
+    .body-sidebar { display: none; }
+    .body-aside { display: none; }
+    .body-main { padding: 4rem 3rem; border: none; }
+    .principles { grid-template-columns: 1fr; }
+    .principle-item:nth-child(2n) { border-right: none; }
+    .principle-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--line-color); }
+    .principle-item:last-child { border-bottom: none; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .page-header { grid-template-columns: 1fr; }
+    .header-sidebar { display: none; }
+    .header-content { padding: 4rem 2rem 3rem; }
+    .header-content::before { left: 2rem; }
+    .body-main { padding: 3rem 2rem; }
+    .closing { grid-template-columns: 1fr; padding: 4rem 2rem; }
+    .closing-sidebar { display: none; }
+    .closing-content { padding: 0; }
+    footer { padding: 2rem; flex-direction: column; gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-mark">The Agency Blueprint</a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="index.html#guide">The Guide</a></li>
+    <li><a href="index.html#newsletter">Newsletter</a></li>
+    <li><a href="index.html#guide" class="nav-cta">Get the Guide</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="header-sidebar">
+    <span class="sidebar-classification">The Operator / Origin File</span>
+    <div class="sidebar-sheet">
+      SHEET 02<br>
+      REV A<br>
+      MARCH 2026
+    </div>
+  </div>
+  <div class="header-content">
+    <div class="page-eyebrow">About the Author</div>
+    <h1 class="page-title">Not a developer.<br><em>A craftsman.</em></h1>
+    <p class="page-standfirst">
+      The Agency Blueprint was written by someone who built a real business with these tools — not someone who teaches about them from the outside looking in.
+    </p>
+  </div>
+</header>
+
+<!-- MAIN BODY -->
+<div class="about-body">
+
+  <!-- Sidebar nav -->
+  <aside class="body-sidebar">
+    <ul class="sidebar-nav">
+      <li><a href="#origin" class="active">Origin</a></li>
+      <li><a href="#the-problem">The Problem</a></li>
+      <li><a href="#the-shift">The Shift</a></li>
+      <li><a href="#principles">Principles</a></li>
+      <li><a href="#cambridge">Cambridge</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main text -->
+  <main class="body-main">
+
+    <!-- Origin -->
+    <div class="chapter reveal" id="origin">
+      <div class="chapter-num">01 — Origin</div>
+      <h2>42 years of making<br><em>things by hand.</em></h2>
+      <div class="body-text">
+        <p>
+          I'm a realism portrait artist. 42 years of that. Work sold across multiple continents. The kind of discipline where a millimetre matters, where a wrong mark can take hours to correct, where you don't get to hide behind approximation.
+        </p>
+        <p>
+          That background shapes everything I do. Products have to earn their place. Systems have to be honest. Craftsmanship isn't a marketing word — it's a standard that either holds or it doesn't.
+        </p>
+        <p>
+          Alongside the art I built a brand — Urban Outlaw Supply Co. — creating custom laser-etched kraft notebooks and EDC products. I designed the website. I built the e-commerce system. I handled the product photography, the copy, the logistics, the marketing. <strong>Entirely solo.</strong>
+        </p>
+        <p>
+          At some point that stops being sustainable. Not because you're not capable — but because you're spending creative energy on work that isn't creative.
+        </p>
+      </div>
+    </div>
+
+    <!-- The problem -->
+    <div class="chapter reveal" id="the-problem">
+      <div class="chapter-num">02 — The Problem</div>
+      <h2>The guides that existed<br><em>weren't written for me.</em></h2>
+      <div class="body-text">
+        <p>
+          When I started exploring AI agents, the resources fell into two camps. There were the YouTube tutorials — fast, shallow, already outdated by the time you finished watching. And there were the technical deep-dives — Python repositories, API documentation, architecture diagrams that assumed you'd spent years in engineering.
+        </p>
+
+        <div class="inline-pull">
+          <p>"Most resources assume you know Python. They assume you can debug JSON errors. Most professionals cannot. This guide exists for the majority."</p>
+        </div>
+
+        <p>
+          I'm not in either camp. I understand systems. I understand logic. I understand what outcome I'm trying to achieve and I can describe it precisely. But I'm not a developer and I never needed to be.
+        </p>
+        <p>
+          The gap — between "I understand what I need" and "I know how to build it" — was enormous. And no one had written the bridge honestly.
+        </p>
+      </div>
+    </div>
+
+    <!-- The shift -->
+    <div class="chapter reveal" id="the-shift">
+      <div class="chapter-num">03 — The Shift</div>
+      <h2>What actually<br><em>changed things.</em></h2>
+      <div class="body-text">
+        <p>
+          The shift wasn't a single moment. It was a slow accumulation of delegated tasks that used to eat hours.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">Stage 01 — Chat</div>
+          <div class="timeline-text">Started using Claude for copywriting, product descriptions, and brand voice. <strong>Fast wins, but still manual.</strong> I was the bottleneck between the tool and the output.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Stage 02 — Workflow</div>
+          <div class="timeline-text">Connected tools. Built simple automations. Began understanding triggers, outputs, data mapping. <strong>The work started moving without me pushing it.</strong></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Stage 03 — Agency</div>
+          <div class="timeline-text">The agents started making decisions. Classifying. Routing. Drafting. The distinction between automation and agency became real — not theoretical. <strong>I stopped operating the system. I started supervising it.</strong></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Stage 04 — Leverage</div>
+          <div class="timeline-text">Creative energy returned to creative work. The repetitive, structured, time-consuming tasks had a place to go. <strong>This is what the Blueprint is built to give you.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Principles -->
+    <div class="chapter reveal" id="principles">
+      <div class="chapter-num">04 — Principles</div>
+      <h2>What this<br><em>is built on.</em></h2>
+      <div class="body-text">
+        <p>These aren't values statements. They're the structural beliefs that shaped every chapter of the Blueprint.</p>
+      </div>
+
+      <div class="principles">
+        <div class="principle-item">
+          <div class="principle-mark">01 —</div>
+          <div class="principle-title">Practitioners over theorists</div>
+          <div class="principle-body">Everything in the guide was tested on real work, for a real business. If it doesn't function under actual conditions, it doesn't go in.</div>
+        </div>
+        <div class="principle-item">
+          <div class="principle-mark">02 —</div>
+          <div class="principle-title">Outcomes before tools</div>
+          <div class="principle-body">The question is never "what can this do?" It's "what do I need done?" Tools are secondary. Clarity of goal is primary.</div>
+        </div>
+        <div class="principle-item">
+          <div class="principle-mark">03 —</div>
+          <div class="principle-title">Start small. Build one thing.</div>
+          <div class="principle-body">Overbuilding is the most common failure mode. One working agent that you understand beats five half-built systems you can't maintain.</div>
+        </div>
+        <div class="principle-item">
+          <div class="principle-mark">04 —</div>
+          <div class="principle-title">Failure is structural</div>
+          <div class="principle-body">Every agent will fail eventually. Designing for that — with guardrails, error handling, draft modes — is not pessimism. It's competence.</div>
+        </div>
+        <div class="principle-item">
+          <div class="principle-mark">05 —</div>
+          <div class="principle-title">Judgment stays human</div>
+          <div class="principle-body">Automate the repetitive. Preserve the irreversible for human decision. Agents support thinking. They don't replace it.</div>
+        </div>
+        <div class="principle-item">
+          <div class="principle-mark">06 —</div>
+          <div class="principle-title">Honesty over hype</div>
+          <div class="principle-body">Agents hallucinate. Tools break. Costs escalate if you're not watching. None of that is hidden here. The Blueprint tells you what works and what to watch for.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cambridge -->
+    <div class="chapter reveal" id="cambridge">
+      <div class="chapter-num">05 — Location</div>
+      <h2>Cambridge,<br><em>England.</em></h2>
+      <div class="body-text">
+        <p>
+          Based in Cambridge — a city where rigorous thinking is ambient, where the gap between research and application is unusually short, and where the audience for "intelligent systems explained plainly" turns out to be larger than you'd expect.
+        </p>
+        <p>
+          Researchers. Academics. Founders. Independent professionals who understand complexity but have no interest in becoming engineers. That's the room this was written for.
+        </p>
+        <p>
+          Portsmouth by origin. 42 years of craft by training. Cambridge by choice. The Agency Blueprint by necessity — because the guide I needed didn't exist, so I wrote it.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Right aside panel -->
+  <aside class="body-aside">
+
+    <div class="aside-block">
+      <div class="aside-label">By the numbers</div>
+      <div class="aside-fact">
+        <div class="fact-value">42</div>
+        <div class="fact-label">Years as a realism artist</div>
+      </div>
+      <div class="aside-fact">
+        <div class="fact-value">5</div>
+        <div class="fact-label">Working agents in the guide</div>
+      </div>
+      <div class="aside-fact">
+        <div class="fact-value">0</div>
+        <div class="fact-label">Lines of code required</div>
+      </div>
+    </div>
+
+    <div class="aside-block">
+      <div class="aside-label">Background</div>
+      <ul class="aside-list">
+        <li>Realism portrait artist — international sales</li>
+        <li>Brand founder — Urban Outlaw Supply Co.</li>
+        <li>Web designer and builder</li>
+        <li>Solo operator — no team, no agency</li>
+        <li>Cambridge, England</li>
+      </ul>
+    </div>
+
+    <div class="aside-block">
+      <div class="aside-label">The guide</div>
+      <ul class="aside-list">
+        <li>Systems manual, not theory</li>
+        <li>Five progressive projects</li>
+        <li>No-code throughout</li>
+        <li>Instant PDF download</li>
+        <li>£24 — one time</li>
+      </ul>
+      <a href="index.html#guide" class="aside-cta">Get the Blueprint →</a>
+    </div>
+
+  </aside>
+</div>
+
+<!-- CLOSING STATEMENT -->
+<section class="closing">
+  <div class="closing-sidebar">
+    <span>End of file</span>
+  </div>
+  <div class="closing-content">
+    <div class="chapter-num">— Final note</div>
+    <h2>This is not<br><em>a trend.</em></h2>
+    <p>
+      AI agents are not going away. The question is whether you engage with them on your terms — understanding the structure, the failure modes, the real costs — or whether you stay on the outside waiting for it to make more sense.
+    </p>
+    <p>
+      <strong>It makes more sense when you build something.</strong> The Blueprint is designed to get you there in five working sessions, starting from zero.
+    </p>
+    <div class="closing-actions">
+      <a href="index.html#guide" class="btn-light">Get the Guide — £24</a>
+      <a href="index.html#newsletter" class="btn-ghost">Join the Newsletter</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-mark">The Agency Blueprint™</div>
+  <ul class="footer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#guide">The Guide</a></li>
+    <li><a href="index.html#newsletter">Newsletter</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(el => revealObs.observe(el));
+
+  // Timeline items
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  const timelineObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 150);
+      }
+    });
+  }, { threshold: 0.1 });
+  timelineItems.forEach(el => timelineObs.observe(el));
+
+  // Active sidebar nav on scroll
+  const chapters = document.querySelectorAll('.chapter[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  chapters.forEach(el => navObs.observe(el));
+</script>
+
+</body>
+</html>

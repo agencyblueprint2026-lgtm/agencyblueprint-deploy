@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Agency Blueprint — Design. Deploy. Delegate.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --blueprint: #1a2744;
+    --blueprint-mid: #2d4070;
+    --blueprint-light: #4a6094;
+    --paper: #f4f0e6;
+    --paper-dark: #e8e2d4;
+    --paper-mid: #ede8db;
+    --ink: #1a2744;
+    --ink-light: #4a5568;
+    --amber: #c17d3c;
+    --amber-light: #d4944f;
+    --grid-color: rgba(26, 39, 68, 0.08);
+    --line-color: rgba(26, 39, 68, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Blueprint grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+      linear-gradient(var(--grid-color) 0.5px, transparent 0.5px),
+      linear-gradient(90deg, var(--grid-color) 0.5px, transparent 0.5px);
+    background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Paper texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(244, 240, 230, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line-color);
+  }
+
+  .nav-mark {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blueprint);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .nav-mark::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--blueprint);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--blueprint); }
+
+  .nav-cta {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper) !important;
+    background: var(--blueprint);
+    padding: 0.5rem 1.2rem;
+    text-decoration: none;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--blueprint-mid) !important; color: var(--paper) !important; }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 6rem 5rem;
+    border-right: 1px solid var(--line-color);
+    position: relative;
+  }
+
+  .hero-left::before {
+    content: 'SHEET 01 / REV A';
+    position: absolute;
+    top: 6rem;
+    left: 5rem;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--blueprint-light);
+    opacity: 0.6;
+  }
+
+  .hero-left::after {
+    content: '▽';
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    color: var(--blueprint-light);
+    opacity: 0.4;
+    animation: bob 2s ease-in-out infinite;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  .hero-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(3rem, 5vw, 4.8rem);
+    line-height: 1.05;
+    color: var(--blueprint);
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.02em;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--blueprint-mid);
+  }
+
+  .hero-sub {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--line-color);
+  }
+
+  .hero-body {
+    font-size: 1.15rem;
+    color: var(--ink-light);
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .hero-body strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--blueprint);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--blueprint-mid);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blueprint);
+    background: transparent;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid var(--blueprint);
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    background: var(--blueprint);
+    color: var(--paper);
+  }
+
+  /* Hero right — blueprint drawing panel */
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 4rem;
+    position: relative;
+    background: rgba(26, 39, 68, 0.03);
+  }
+
+  .blueprint-diagram {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+  }
+
+  .diagram-title {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+    margin-bottom: 2rem;
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  .diagram-box {
+    border: 1px solid var(--blueprint);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 0;
+    position: relative;
+    background: rgba(244, 240, 230, 0.7);
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+  }
+
+  .diagram-box:nth-child(2) { animation-delay: 0.2s; }
+  .diagram-box:nth-child(3) { animation-delay: 0.4s; }
+  .diagram-box:nth-child(4) { animation-delay: 0.6s; }
+  .diagram-box:nth-child(5) { animation-delay: 0.8s; }
+  .diagram-box:nth-child(6) { animation-delay: 1s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .diagram-connector {
+    width: 1px;
+    height: 24px;
+    background: var(--blueprint);
+    margin: 0 auto;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+  }
+
+  .diagram-connector::after {
+    content: '▼';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.5rem;
+    color: var(--blueprint);
+  }
+
+  .diagram-connector:nth-of-type(3) { animation-delay: 0.3s; }
+  .diagram-connector:nth-of-type(5) { animation-delay: 0.5s; }
+  .diagram-connector:nth-of-type(7) { animation-delay: 0.7s; }
+  .diagram-connector:nth-of-type(9) { animation-delay: 0.9s; }
+
+  .box-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .box-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    color: var(--blueprint);
+  }
+
+  .box-note {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    color: var(--ink-light);
+    margin-top: 0.2rem;
+    opacity: 0.7;
+  }
+
+  .diagram-box.highlight {
+    background: var(--blueprint);
+  }
+  .diagram-box.highlight .box-label,
+  .diagram-box.highlight .box-title,
+  .diagram-box.highlight .box-note {
+    color: var(--paper);
+  }
+  .diagram-box.highlight .box-label { color: rgba(244,240,230,0.6); }
+
+  /* Corner marks */
+  .corner-mark {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: var(--amber);
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .corner-mark.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .corner-mark.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .corner-mark.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .corner-mark.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  /* ─── SECTION: THE STORY ─── */
+  .section-story {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    border-top: 1px solid var(--line-color);
+    min-height: 60vh;
+  }
+
+  .section-label-vertical {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--line-color);
+    padding: 3rem 1rem;
+  }
+
+  .vertical-text {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    opacity: 0.6;
+  }
+
+  .story-content {
+    padding: 5rem 4rem;
+    border-right: 1px solid var(--line-color);
+  }
+
+  .section-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .section-num::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.15;
+    color: var(--blueprint);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { font-style: italic; }
+
+  .story-text {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .story-text p { margin-bottom: 1.2rem; }
+  .story-text strong { color: var(--ink); font-weight: 600; }
+
+  .story-pull {
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pull-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    color: var(--blueprint);
+    font-style: italic;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .pull-quote::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.3rem;
+    bottom: 0.3rem;
+    width: 3px;
+    background: var(--amber);
+  }
+
+  .pull-attribution {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+    opacity: 0.7;
+  }
+
+  /* ─── SECTION: WHAT YOU GET ─── */
+  .section-product {
+    position: relative;
+    z-index: 1;
+    border-top: 2px solid var(--blueprint);
+    padding: 6rem 5rem;
+    background: var(--blueprint);
+  }
+
+  .section-product .section-num { color: rgba(244,240,230,0.5); }
+  .section-product .section-num::before { background: rgba(244,240,230,0.3); }
+  .section-product h2 { color: var(--paper); }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 4rem;
+    border: 1px solid rgba(244,240,230,0.15);
+  }
+
+  .product-item {
+    padding: 2.5rem;
+    border-right: 1px solid rgba(244,240,230,0.15);
+    border-bottom: 1px solid rgba(244,240,230,0.15);
+    transition: background 0.2s;
+  }
+
+  .product-item:hover { background: rgba(244,240,230,0.04); }
+  .product-item:nth-child(3n) { border-right: none; }
+
+  .item-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(244,240,230,0.12);
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .item-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--paper);
+    margin-bottom: 0.8rem;
+  }
+
+  .item-desc {
+    font-size: 0.95rem;
+    color: rgba(244,240,230,0.6);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ─── SECTION: THE GUIDE ─── */
+  .section-guide {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line-color);
+  }
+
+  .guide-left {
+    padding: 6rem 5rem;
+    border-right: 1px solid var(--line-color);
+  }
+
+  .guide-right {
+    padding: 6rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(26, 39, 68, 0.02);
+  }
+
+  /* Book mockup */
+  .book-mockup {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .book-cover {
+    background: var(--blueprint);
+    padding: 3rem 2.5rem;
+    position: relative;
+    box-shadow: 8px 8px 0 var(--blueprint-light), 12px 12px 0 rgba(26,39,68,0.2);
+  }
+
+  .book-cover::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(244,240,230,0.15);
+    pointer-events: none;
+  }
+
+  .book-cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(244,240,230,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,240,230,0.04) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .book-badge {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .book-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    color: var(--paper);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .book-subtitle {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,240,230,0.5);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .book-divider {
+    height: 1px;
+    background: rgba(244,240,230,0.2);
+    margin: 1.5rem 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .book-meta {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: rgba(244,240,230,0.4);
+    position: relative;
+    z-index: 1;
+  }
+
+  .book-price-tag {
+    position: absolute;
+    top: -12px;
+    right: 2rem;
+    background: var(--amber);
+    color: var(--paper);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.8rem;
+    z-index: 2;
+  }
+
+  .guide-features {
+    list-style: none;
+    margin: 2rem 0 3rem;
+  }
+
+  .guide-features li {
+    font-size: 1rem;
+    color: var(--ink-light);
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-color);
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    font-weight: 300;
+  }
+
+  .guide-features li::before {
+    content: attr(data-num);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    color: var(--amber);
+    flex-shrink: 0;
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── SECTION: NEWSLETTER ─── */
+  .section-newsletter {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--line-color);
+    padding: 6rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .newsletter-left h2 { margin-bottom: 1rem; }
+
+  .newsletter-left p {
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 0.8rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blueprint-light);
+  }
+
+  .form-input {
+    background: transparent;
+    border: 1px solid var(--line-color);
+    border-color: var(--blueprint);
+    padding: 0.9rem 1rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-input:focus { border-color: var(--amber); }
+  .form-input::placeholder { color: var(--ink-light); opacity: 0.4; }
+
+  .form-note {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-light);
+    opacity: 0.5;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 2px solid var(--blueprint);
+    background: var(--paper-dark);
+    padding: 3rem 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-mark {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blueprint);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .footer-mark::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--blueprint);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .footer-meta {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-light);
+    opacity: 0.5;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 6rem 2rem 4rem; }
+    .section-story { grid-template-columns: 1fr; }
+    .section-label-vertical { display: none; }
+    .story-content, .story-pull { padding: 3rem 2rem; border: none; }
+    .story-content { border-bottom: 1px solid var(--line-color); }
+    .product-grid { grid-template-columns: 1fr; }
+    .product-item { border-right: none; }
+    .section-guide { grid-template-columns: 1fr; }
+    .guide-left { padding: 4rem 2rem; border: none; }
+    .guide-right { padding: 3rem 2rem; }
+    .section-newsletter { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 2rem; }
+    .section-product { padding: 4rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-meta { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-mark">The Agency Blueprint</div>
+  <ul class="nav-links">
+    <li><a href="#story">About</a></li>
+    <li><a href="#guide">The Guide</a></li>
+    <li><a href="#newsletter">Newsletter</a></li>
+    <li><a href="#guide" class="nav-cta">Get the Guide</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Version 1.0 — March 2026</div>
+    <h1>Build AI Agents.<br><em>Without Writing Code.</em></h1>
+    <div class="hero-sub">Design &nbsp;·&nbsp; Deploy &nbsp;·&nbsp; Delegate</div>
+    <p class="hero-body">
+      This is not a theory book. This is not a hype document.<br>
+      This is a <strong>systems manual</strong> — written by someone who used these tools
+      to run a real business, built from scratch, alone.
+    </p>
+    <div class="hero-actions">
+      <a href="#guide" class="btn-primary">Get the Guide — £24</a>
+      <a href="#newsletter" class="btn-secondary">Join the Newsletter</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="blueprint-diagram">
+      <div class="diagram-title">Agent Architecture — Fig. 01</div>
+
+      <div class="diagram-box" style="animation-delay:0.1s">
+        <div class="corner-mark tl"></div><div class="corner-mark tr"></div>
+        <div class="corner-mark bl"></div><div class="corner-mark br"></div>
+        <div class="box-label">Input Layer</div>
+        <div class="box-title">Goal Definition</div>
+        <div class="box-note">What outcome are you pursuing?</div>
+      </div>
+
+      <div class="diagram-connector" style="animation-delay:0.25s"></div>
+
+      <div class="diagram-box highlight" style="animation-delay:0.4s">
+        <div class="box-label">Reasoning Layer</div>
+        <div class="box-title">The Brain (LLM)</div>
+        <div class="box-note">Determines steps · Interprets context</div>
+      </div>
+
+      <div class="diagram-connector" style="animation-delay:0.55s"></div>
+
+      <div class="diagram-box" style="animation-delay:0.7s">
+        <div class="box-label">Action Layer</div>
+        <div class="box-title">Tools + Routing</div>
+        <div class="box-note">Search · Email · Sheets · Webhooks</div>
+      </div>
+
+      <div class="diagram-connector" style="animation-delay:0.85s"></div>
+
+      <div class="diagram-box" style="animation-delay:1s">
+        <div class="box-label">Memory Layer</div>
+        <div class="box-title">Context + State</div>
+        <div class="box-note">Logs · Documents · Workflow state</div>
+      </div>
+
+      <div class="diagram-connector" style="animation-delay:1.15s"></div>
+
+      <div class="diagram-box" style="animation-delay:1.3s">
+        <div class="box-label">Output Layer</div>
+        <div class="box-title">Structured Result</div>
+        <div class="box-note">Draft · Report · Action · Decision</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE STORY -->
+<section class="section-story" id="story">
+  <div class="section-label-vertical">
+    <span class="vertical-text">Origin / Context</span>
+  </div>
+
+  <div class="story-content reveal">
+    <div class="section-num">01 — The Story</div>
+    <h2>I'm not a developer.<br><em>I'm a craftsman.</em></h2>
+    <div class="story-text">
+      <p>
+        I'm a realism portrait artist and product maker. I built a brand, a website, an e-commerce system, and a physical product line — essentially solo, from scratch.
+      </p>
+      <p>
+        At some point I started delegating the repetitive work to AI agents. Not because I understood the technology deeply — but because I understood <strong>what I needed done</strong>, and I could think structurally about how to describe it.
+      </p>
+      <p>
+        That turned out to be enough.
+      </p>
+      <p>
+        This guide exists because most resources assume you know Python. They assume you can debug JSON errors. They assume you're comfortable with infrastructure.
+      </p>
+      <p>
+        <strong>Most people aren't. I wasn't.</strong> And I built working agent systems anyway.
+      </p>
+      <p>
+        The Agency Blueprint is what I wish had existed when I started.
+      </p>
+    </div>
+  </div>
+
+  <div class="story-pull reveal">
+    <div class="pull-quote">
+      "Automation is not about replacing yourself. It is about delegating structured tasks so you can focus on judgment, creativity, and strategy."
+    </div>
+    <div class="pull-attribution">— The Agency Blueprint, Preface</div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="section-product" id="features">
+  <div class="section-num">02 — The System</div>
+  <h2>Five working agents.<br><em>One clear progression.</em></h2>
+
+  <div class="product-grid">
+    <div class="product-item reveal">
+      <div class="item-num">01</div>
+      <div class="item-title">The Echo Bot</div>
+      <div class="item-desc">Understand the fundamental Input → Process → Output loop. Every agent you ever build starts here.</div>
+    </div>
+    <div class="product-item reveal">
+      <div class="item-num">02</div>
+      <div class="item-title">The Web Researcher</div>
+      <div class="item-desc">Give your agent eyes. Connect it to live data. Learn how to filter signal from noise before it reaches the LLM.</div>
+    </div>
+    <div class="product-item reveal">
+      <div class="item-num">03</div>
+      <div class="item-title">The Inbox Manager</div>
+      <div class="item-desc">Introduce decision routing. Your agent reads, classifies, and acts differently based on context. This is foundational agency behaviour.</div>
+    </div>
+    <div class="product-item reveal">
+      <div class="item-num">04</div>
+      <div class="item-title">The Content Factory</div>
+      <div class="item-desc">Build a multi-stage production pipeline. Sequential dependency. Variable passing. Real output ready for publishing.</div>
+    </div>
+    <div class="product-item reveal">
+      <div class="item-num">05</div>
+      <div class="item-title">The Orchestra</div>
+      <div class="item-desc">Three specialised agents working in parallel, synthesised into one coherent output. Division of cognitive labour.</div>
+    </div>
+    <div class="product-item reveal">
+      <div class="item-num">+</div>
+      <div class="item-title">Advanced Foundations</div>
+      <div class="item-desc">Prompt architecture. Memory and retrieval. Security. Failure modes. Cost management. 25 business agent ideas to build next.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE GUIDE -->
+<section class="section-guide" id="guide">
+  <div class="guide-left reveal">
+    <div class="section-num">03 — The Guide</div>
+    <h2>The Agency<br><em>Blueprint™</em></h2>
+    <ul class="guide-features">
+      <li data-num="01 —">Complete systems manual, not a theory document</li>
+      <li data-num="02 —">Five progressive hands-on projects</li>
+      <li data-num="03 —">Four-layer prompt architecture framework</li>
+      <li data-num="04 —">Security, compliance, and failure mode coverage</li>
+      <li data-num="05 —">25 business agent ideas to implement immediately</li>
+      <li data-num="06 —">Written by a practitioner, not a theorist</li>
+      <li data-num="07 —">No coding required. Structured thinking required.</li>
+    </ul>
+    <a href="#" class="btn-primary">Get the Guide — £24</a>
+  </div>
+
+  <div class="guide-right">
+    <div class="book-mockup">
+      <div class="book-price-tag">£24</div>
+      <div class="book-cover">
+        <div class="book-cover-grid"></div>
+        <div class="book-badge">The Agency Blueprint™ — V1.0</div>
+        <div class="book-title">Design.<br>Deploy.<br>Delegate.</div>
+        <div class="book-subtitle">Build AI Agents Without Writing Code</div>
+        <div class="book-divider"></div>
+        <div class="book-meta">
+          PDF / 38 Pages / Instant Download<br>
+          Cambridge, England — March 2026
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section-newsletter" id="newsletter">
+  <div class="newsletter-left reveal">
+    <div class="section-num">04 — Field Notes</div>
+    <h2>The weekly<br><em>dispatch.</em></h2>
+    <p>
+      Practical agent builds, honest failures, workflow breakdowns, and tools worth your time. Written from experience, not from a content calendar.
+    </p>
+    <p>
+      No hype. No fluff. One email per week.
+    </p>
+  </div>
+
+  <div class="newsletter-right reveal">
+    <div class="newsletter-form">
+      <div class="form-field">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="First name">
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="you@example.com">
+      </div>
+      <button class="btn-primary" style="width:100%;text-align:center;border:none;">Subscribe to Field Notes</button>
+      <div class="form-note">No spam. Unsubscribe any time. One email per week.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-mark">The Agency Blueprint™</div>
+  <div class="footer-meta">
+    Design. Deploy. Delegate.<br>
+    Cambridge, England &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; V1.0
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
