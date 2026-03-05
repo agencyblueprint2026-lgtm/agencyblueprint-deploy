@@ -1067,13 +1067,14 @@
     <div class="newsletter-form">
       <div class="form-field">
         <label class="form-label">Your Name</label>
-        <input type="text" class="form-input" placeholder="First name">
+        <input type="text" id="newsletter-name" class="form-input" placeholder="First name">
       </div>
       <div class="form-field">
         <label class="form-label">Email Address</label>
-        <input type="email" class="form-input" placeholder="you@example.com">
+        <input type="email" id="newsletter-email" class="form-input" placeholder="you@example.com">
       </div>
-      <button class="btn-primary" style="width:100%;text-align:center;border:none;">Subscribe to Field Notes</button>
+      <button class="btn-primary" id="newsletter-submit" style="width:100%;text-align:center;border:none;" onclick="subscribeToNewsletter()">Subscribe to The Blueprint Dispatch</button>
+      <div id="newsletter-msg" class="form-note" style="display:none;"></div>
       <div class="form-note">No spam. Unsubscribe any time. One email per week.</div>
     </div>
   </div>
@@ -1101,5 +1102,28 @@
   reveals.forEach(el => observer.observe(el));
 </script>
 
+
+<script>
+  function subscribeToNewsletter() {
+    const email = document.getElementById('newsletter-email').value;
+    const name = document.getElementById('newsletter-name').value;
+    const msg = document.getElementById('newsletter-msg');
+    const btn = document.getElementById('newsletter-submit');
+    if (!email || !email.includes('@')) {
+      msg.style.display = 'block';
+      msg.style.color = '#c17d3c';
+      msg.textContent = 'Please enter a valid email address.';
+      return;
+    }
+    btn.textContent = 'Subscribing...';
+    btn.disabled = true;
+    const url = 'https://the-blueprint-dispatchnewsletter-087d3b.beehiiv.com/subscribe?email=' + encodeURIComponent(email);
+    window.open(url, '_blank');
+    btn.textContent = 'Subscribed ✓';
+    msg.style.display = 'block';
+    msg.style.color = '#4a6094';
+    msg.textContent = 'Opening subscription page in a new tab. No spam. Unsubscribe any time.';
+  }
+</script>
 </body>
 </html>
