@@ -857,6 +857,295 @@
     .section-product { padding: 4rem 2rem; }
     footer { padding: 2rem; flex-direction: column; gap: 1.5rem; text-align: center; }
     .footer-meta { text-align: center; }
+    /* Skills responsive */
+    .section-skills { grid-template-columns: 1fr; }
+    .skills-main { padding: 4rem 2rem; }
+    .skills-how { grid-template-columns: 1fr; }
+    .how-divider { display: none; }
+    .how-step { border-bottom: 1px solid var(--line-color); }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-card { border-right: none; }
+    .skills-bundle { padding: 3rem 2rem; }
+    .bundle-actions { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+
+  /* ─── SKILL SETS SECTION ─── */
+  .section-skills {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-top: 1px solid var(--line-color);
+  }
+
+  .skills-main {
+    padding: 6rem 5rem;
+  }
+
+  .skills-intro {
+    font-size: 1.1rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 620px;
+    margin: 1.5rem 0 4rem;
+  }
+
+  /* How it works strip */
+  .skills-how {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: start;
+    border: 1px solid var(--line-color);
+    margin-bottom: 4rem;
+    background: rgba(26, 39, 68, 0.02);
+  }
+
+  .how-step { padding: 2rem; }
+
+  .how-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    font-family: 'Courier Prime', monospace;
+    font-size: 1.2rem;
+    color: var(--amber);
+    border-left: 1px solid var(--line-color);
+    border-right: 1px solid var(--line-color);
+    min-width: 48px;
+  }
+
+  .how-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--amber);
+    margin-bottom: 0.6rem;
+  }
+
+  .how-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    color: var(--blueprint);
+    margin-bottom: 0.5rem;
+  }
+
+  .how-desc {
+    font-size: 0.88rem;
+    color: var(--ink-light);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .how-desc code {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.8rem;
+    background: rgba(26, 39, 68, 0.07);
+    padding: 0.1em 0.4em;
+    color: var(--blueprint);
+  }
+
+  /* Skill card grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid var(--line-color);
+    margin-bottom: 4rem;
+  }
+
+  .skill-card {
+    padding: 2.5rem;
+    border-right: 1px solid var(--line-color);
+    border-bottom: 1px solid var(--line-color);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.2s;
+  }
+
+  .skill-card:hover { background: rgba(26, 39, 68, 0.03); }
+  .skill-card:nth-child(3n) { border-right: none; }
+
+  .skill-card--soon { opacity: 0.55; }
+  .skill-card--soon:hover { background: transparent; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-index {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--blueprint-light);
+    opacity: 0.6;
+  }
+
+  .card-status {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--blueprint);
+    padding: 0.2rem 0.6rem;
+  }
+
+  .card-status--soon {
+    background: transparent;
+    color: var(--blueprint-light);
+    border: 1px solid var(--line-color);
+  }
+
+  .card-icon {
+    font-size: 1.6rem;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--blueprint);
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+
+  .card-niche {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .card-includes {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 2rem;
+  }
+
+  .card-includes li {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--line-color);
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .card-includes li::before {
+    content: '—';
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    color: var(--blueprint-light);
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+
+  .card-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: var(--blueprint);
+    line-height: 1;
+  }
+
+  .card-cta {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--blueprint);
+    padding: 0.6rem 1.2rem;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .card-cta:hover { background: var(--blueprint-mid); }
+
+  .card-cta--outline {
+    background: transparent;
+    color: var(--blueprint);
+    border: 1px solid var(--blueprint);
+  }
+
+  .card-cta--outline:hover { background: var(--blueprint); color: var(--paper); }
+
+  /* Bundle CTA */
+  .skills-bundle {
+    border-top: 2px solid var(--blueprint);
+    background: var(--blueprint);
+    padding: 4rem;
+    position: relative;
+  }
+
+  .bundle-inner { max-width: 680px; }
+
+  .bundle-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(193, 125, 60, 0.3);
+    position: relative;
+  }
+
+  .bundle-label .corner-mark { border-color: var(--amber); opacity: 0.6; }
+
+  .bundle-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--paper);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .bundle-title em { font-style: italic; color: rgba(244, 240, 230, 0.7); }
+
+  .bundle-desc {
+    font-size: 1rem;
+    color: rgba(244, 240, 230, 0.6);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+    max-width: 520px;
+  }
+
+  .bundle-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .bundle-saving {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--amber);
+    text-transform: uppercase;
   }
 </style>
 </head>
@@ -869,6 +1158,7 @@
     <li><a href="#story">About</a></li>
     <li><a href="#guide">The Guide</a></li>
     <li><a href="#newsletter">Newsletter</a></li>
+    <li><a href="#skills">Skill Sets</a></li>
     <li><a href="https://blueprintagency.gumroad.com/l/cdaucg" target="_blank" class="nav-cta">Get the Guide</a></li>
   </ul>
 </nav>
@@ -1047,6 +1337,199 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SKILL SETS -->
+<section class="section-skills" id="skills">
+
+  <div class="section-label-vertical">
+    <span class="vertical-text">Skill Sets / Modules</span>
+  </div>
+
+  <div class="skills-main">
+
+    <div class="section-num reveal">05 — Skill Sets</div>
+    <h2 class="reveal">Pre-built intelligence.<br><em>Ready to install.</em></h2>
+
+    <p class="skills-intro reveal">
+      A skill is a reusable instruction set — a specialist module that tells Claude
+      exactly how to think, write, and operate in a specific domain.
+      Install one and your AI stops being a generalist.
+      It becomes a practitioner.
+    </p>
+
+    <div class="skills-how reveal">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="how-label">Purchase &amp; Download</div>
+        <div class="how-desc">Receive a <code>.skill</code> file and install guide instantly via Gumroad.</div>
+      </div>
+      <div class="how-divider">→</div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="how-label">Install into Claude</div>
+        <div class="how-desc">Drop the file into your Claude skills directory. One-time setup, no coding.</div>
+      </div>
+      <div class="how-divider">→</div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="how-label">Claude Activates It</div>
+        <div class="how-desc">Claude detects the relevant task and operates as a domain specialist automatically.</div>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-card reveal">
+        <div class="card-header">
+          <div class="card-index">SK-01</div>
+          <div class="card-status">Available</div>
+        </div>
+        <div class="card-icon">&#x2B21;</div>
+        <div class="card-title">Ecommerce Operator</div>
+        <div class="card-niche">For: Independent product sellers &amp; makers</div>
+        <ul class="card-includes">
+          <li>Product listing copy — title, description, bullet points</li>
+          <li>SEO meta &amp; search-optimised product titles</li>
+          <li>Customer email responses &amp; order comms</li>
+          <li>Returns &amp; complaints handling scripts</li>
+          <li>Product launch announcement copy</li>
+        </ul>
+        <div class="card-footer">
+          <div class="card-price">£12</div>
+          <a href="https://blueprintagency.gumroad.com" target="_blank" class="card-cta">Get Skill Set</a>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="card-header">
+          <div class="card-index">SK-02</div>
+          <div class="card-status">Available</div>
+        </div>
+        <div class="card-icon">&#x25C8;</div>
+        <div class="card-title">Freelancer &amp; Consultant</div>
+        <div class="card-niche">For: Solo operators &amp; service providers</div>
+        <ul class="card-includes">
+          <li>Project proposals &amp; scope documents</li>
+          <li>Client onboarding emails &amp; briefs</li>
+          <li>Invoice &amp; payment chaser templates</li>
+          <li>Status update &amp; reporting copy</li>
+          <li>Testimonial request sequences</li>
+        </ul>
+        <div class="card-footer">
+          <div class="card-price">£12</div>
+          <a href="https://blueprintagency.gumroad.com" target="_blank" class="card-cta">Get Skill Set</a>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="card-header">
+          <div class="card-index">SK-03</div>
+          <div class="card-status">Available</div>
+        </div>
+        <div class="card-icon">&#x25CE;</div>
+        <div class="card-title">Content Creator</div>
+        <div class="card-niche">For: Creators, writers &amp; newsletter operators</div>
+        <ul class="card-includes">
+          <li>Long-form content repurposed into social posts</li>
+          <li>Newsletter drafting &amp; structure</li>
+          <li>Platform-specific caption writing</li>
+          <li>Content calendar planning</li>
+          <li>Hook generation &amp; headline testing</li>
+        </ul>
+        <div class="card-footer">
+          <div class="card-price">£12</div>
+          <a href="https://blueprintagency.gumroad.com" target="_blank" class="card-cta">Get Skill Set</a>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="card-header">
+          <div class="card-index">SK-04</div>
+          <div class="card-status">Available</div>
+        </div>
+        <div class="card-icon">&#x2B1F;</div>
+        <div class="card-title">Tradesperson</div>
+        <div class="card-niche">For: Builders, electricians, plumbers &amp; joiners</div>
+        <ul class="card-includes">
+          <li>Job quotes &amp; estimates</li>
+          <li>Customer-facing job sheets</li>
+          <li>Completion sign-off documentation</li>
+          <li>Complaint &amp; dispute response letters</li>
+          <li>Follow-up &amp; review request messages</li>
+        </ul>
+        <div class="card-footer">
+          <div class="card-price">£12</div>
+          <a href="https://blueprintagency.gumroad.com" target="_blank" class="card-cta">Get Skill Set</a>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="card-header">
+          <div class="card-index">SK-05</div>
+          <div class="card-status">Available</div>
+        </div>
+        <div class="card-icon">&#x25C7;</div>
+        <div class="card-title">Agency Owner</div>
+        <div class="card-niche">For: Small agency operators &amp; studio leads</div>
+        <ul class="card-includes">
+          <li>Client briefs &amp; creative strategy documents</li>
+          <li>Monthly reporting &amp; performance summaries</li>
+          <li>New business pitch decks &amp; proposals</li>
+          <li>Internal SOPs &amp; workflow documentation</li>
+          <li>Retainer scope &amp; renewal letters</li>
+        </ul>
+        <div class="card-footer">
+          <div class="card-price">£12</div>
+          <a href="https://blueprintagency.gumroad.com" target="_blank" class="card-cta">Get Skill Set</a>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--soon reveal">
+        <div class="card-header">
+          <div class="card-index">SK-06</div>
+          <div class="card-status card-status--soon">Coming Soon</div>
+        </div>
+        <div class="card-icon">&#x2B20;</div>
+        <div class="card-title">Brand Voice Kit</div>
+        <div class="card-niche">For: Any business with a distinct identity</div>
+        <ul class="card-includes">
+          <li>Custom brand voice onboarding</li>
+          <li>All copy written in your tone by default</li>
+          <li>Social, email, product &amp; web copy unified</li>
+          <li>Brand vocabulary &amp; phrase guide</li>
+          <li>Personalised to your business</li>
+        </ul>
+        <div class="card-footer">
+          <div class="card-price">TBC</div>
+          <a href="#newsletter" class="card-cta card-cta--outline">Notify Me</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="skills-bundle reveal">
+      <div class="bundle-inner">
+        <div class="bundle-label">
+          <span class="corner-mark tl"></span>
+          <span class="corner-mark tr"></span>
+          <span class="corner-mark bl"></span>
+          <span class="corner-mark br"></span>
+          Complete Collection
+        </div>
+        <div class="bundle-title">All Five Skill Sets.<br><em>One price.</em></div>
+        <div class="bundle-desc">
+          Purchase the full library and install domain expertise across every part of your operation.
+          Includes all future updates to existing skill sets.
+        </div>
+        <div class="bundle-actions">
+          <a href="https://blueprintagency.gumroad.com" target="_blank" class="btn-primary">Get the Full Library — £49</a>
+          <div class="bundle-saving">Save £11 vs. buying separately</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
