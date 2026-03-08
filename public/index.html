@@ -25,7 +25,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -37,7 +36,6 @@
     overflow-x: hidden;
   }
 
-  /* Blueprint grid background */
   body::before {
     content: '';
     position: fixed;
@@ -52,7 +50,6 @@
     z-index: 0;
   }
 
-  /* Paper texture overlay */
   body::after {
     content: '';
     position: fixed;
@@ -63,12 +60,9 @@
     opacity: 0.6;
   }
 
-  /* ─── NAV ─── */
   nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     z-index: 100;
     display: flex;
     align-items: center;
@@ -94,8 +88,7 @@
   .nav-mark::before {
     content: '';
     display: block;
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     border: 2px solid var(--blueprint);
     transform: rotate(45deg);
     flex-shrink: 0;
@@ -134,7 +127,6 @@
 
   .nav-cta:hover { background: var(--blueprint-mid) !important; color: var(--paper) !important; }
 
-  /* ─── HERO ─── */
   .hero {
     position: relative;
     z-index: 1;
@@ -156,8 +148,7 @@
   .hero-left::before {
     content: 'SHEET 01 / REV A';
     position: absolute;
-    top: 6rem;
-    left: 5rem;
+    top: 6rem; left: 5rem;
     font-family: 'Courier Prime', monospace;
     font-size: 0.65rem;
     letter-spacing: 0.2em;
@@ -168,8 +159,7 @@
   .hero-left::after {
     content: '▽';
     position: absolute;
-    bottom: 3rem;
-    left: 50%;
+    bottom: 3rem; left: 50%;
     transform: translateX(-50%);
     font-size: 1.2rem;
     color: var(--blueprint-light);
@@ -197,8 +187,7 @@
   .hero-label::before {
     content: '';
     display: block;
-    width: 30px;
-    height: 1px;
+    width: 30px; height: 1px;
     background: var(--amber);
   }
 
@@ -211,10 +200,7 @@
     letter-spacing: -0.02em;
   }
 
-  h1 em {
-    font-style: italic;
-    color: var(--blueprint-mid);
-  }
+  h1 em { font-style: italic; color: var(--blueprint-mid); }
 
   .hero-sub {
     font-family: 'Courier Prime', monospace;
@@ -236,17 +222,9 @@
     max-width: 480px;
   }
 
-  .hero-body strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
+  .hero-body strong { color: var(--ink); font-weight: 600; }
 
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
 
   .btn-primary {
     font-family: 'Courier Prime', monospace;
@@ -263,10 +241,7 @@
     cursor: pointer;
   }
 
-  .btn-primary:hover {
-    background: var(--blueprint-mid);
-    transform: translateY(-1px);
-  }
+  .btn-primary:hover { background: var(--blueprint-mid); transform: translateY(-1px); }
 
   .btn-secondary {
     font-family: 'Courier Prime', monospace;
@@ -283,12 +258,8 @@
     cursor: pointer;
   }
 
-  .btn-secondary:hover {
-    background: var(--blueprint);
-    color: var(--paper);
-  }
+  .btn-secondary:hover { background: var(--blueprint); color: var(--paper); }
 
-  /* Hero right — blueprint drawing panel */
   .hero-right {
     display: flex;
     flex-direction: column;
@@ -299,11 +270,7 @@
     background: rgba(26, 39, 68, 0.03);
   }
 
-  .blueprint-diagram {
-    width: 100%;
-    max-width: 420px;
-    position: relative;
-  }
+  .blueprint-diagram { width: 100%; max-width: 420px; position: relative; }
 
   .diagram-title {
     font-family: 'Courier Prime', monospace;
@@ -319,7 +286,6 @@
   .diagram-box {
     border: 1px solid var(--blueprint);
     padding: 1.2rem 1.5rem;
-    margin-bottom: 0;
     position: relative;
     background: rgba(244, 240, 230, 0.7);
     opacity: 0;
@@ -338,8 +304,7 @@
   }
 
   .diagram-connector {
-    width: 1px;
-    height: 24px;
+    width: 1px; height: 24px;
     background: var(--blueprint);
     margin: 0 auto;
     position: relative;
@@ -350,8 +315,7 @@
   .diagram-connector::after {
     content: '▼';
     position: absolute;
-    bottom: -6px;
-    left: 50%;
+    bottom: -6px; left: 50%;
     transform: translateX(-50%);
     font-size: 0.5rem;
     color: var(--blueprint);
@@ -362,57 +326,24 @@
   .diagram-connector:nth-of-type(7) { animation-delay: 0.7s; }
   .diagram-connector:nth-of-type(9) { animation-delay: 0.9s; }
 
-  .box-label {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--blueprint-light);
-    margin-bottom: 0.3rem;
-  }
+  .box-label { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blueprint-light); margin-bottom: 0.3rem; }
+  .box-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--blueprint); }
+  .box-note { font-family: 'Courier Prime', monospace; font-size: 0.6rem; color: var(--ink-light); margin-top: 0.2rem; opacity: 0.7; }
 
-  .box-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.1rem;
-    color: var(--blueprint);
-  }
-
-  .box-note {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    color: var(--ink-light);
-    margin-top: 0.2rem;
-    opacity: 0.7;
-  }
-
-  .diagram-box.highlight {
-    background: var(--blueprint);
-  }
+  .diagram-box.highlight { background: var(--blueprint); }
   .diagram-box.highlight .box-label,
   .diagram-box.highlight .box-title,
-  .diagram-box.highlight .box-note {
-    color: var(--paper);
-  }
+  .diagram-box.highlight .box-note { color: var(--paper); }
   .diagram-box.highlight .box-label { color: rgba(244,240,230,0.6); }
 
-  /* Corner marks */
-  .corner-mark {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-color: var(--amber);
-    border-style: solid;
-    opacity: 0.5;
-  }
+  .corner-mark { position: absolute; width: 12px; height: 12px; border-color: var(--amber); border-style: solid; opacity: 0.5; }
   .corner-mark.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
   .corner-mark.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
   .corner-mark.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
   .corner-mark.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
-  /* ─── SECTION: THE STORY ─── */
   .section-story {
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     display: grid;
     grid-template-columns: 180px 1fr 1fr;
     border-top: 1px solid var(--line-color);
@@ -438,10 +369,7 @@
     opacity: 0.6;
   }
 
-  .story-content {
-    padding: 5rem 4rem;
-    border-right: 1px solid var(--line-color);
-  }
+  .story-content { padding: 5rem 4rem; border-right: 1px solid var(--line-color); }
 
   .section-num {
     font-family: 'Courier Prime', monospace;
@@ -454,13 +382,7 @@
     gap: 0.6rem;
   }
 
-  .section-num::before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 1px;
-    background: var(--amber);
-  }
+  .section-num::before { content: ''; display: block; width: 20px; height: 1px; background: var(--amber); }
 
   h2 {
     font-family: 'DM Serif Display', Georgia, serif;
@@ -473,22 +395,11 @@
 
   h2 em { font-style: italic; }
 
-  .story-text {
-    font-size: 1.05rem;
-    color: var(--ink-light);
-    line-height: 1.8;
-    font-weight: 300;
-  }
-
+  .story-text { font-size: 1.05rem; color: var(--ink-light); line-height: 1.8; font-weight: 300; }
   .story-text p { margin-bottom: 1.2rem; }
   .story-text strong { color: var(--ink); font-weight: 600; }
 
-  .story-pull {
-    padding: 5rem 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  .story-pull { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
 
   .pull-quote {
     font-family: 'DM Serif Display', serif;
@@ -501,29 +412,12 @@
     padding-left: 2rem;
   }
 
-  .pull-quote::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.3rem;
-    bottom: 0.3rem;
-    width: 3px;
-    background: var(--amber);
-  }
+  .pull-quote::before { content: ''; position: absolute; left: 0; top: 0.3rem; bottom: 0.3rem; width: 3px; background: var(--amber); }
 
-  .pull-attribution {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--blueprint-light);
-    opacity: 0.7;
-  }
+  .pull-attribution { font-family: 'Courier Prime', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blueprint-light); opacity: 0.7; }
 
-  /* ─── SECTION: WHAT YOU GET ─── */
   .section-product {
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     border-top: 2px solid var(--blueprint);
     padding: 6rem 5rem;
     background: var(--blueprint);
@@ -533,76 +427,22 @@
   .section-product .section-num::before { background: rgba(244,240,230,0.3); }
   .section-product h2 { color: var(--paper); }
 
-  .product-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 0;
-    margin-top: 4rem;
-    border: 1px solid rgba(244,240,230,0.15);
-  }
+  .product-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-top: 4rem; border: 1px solid rgba(244,240,230,0.15); }
 
-  .product-item {
-    padding: 2.5rem;
-    border-right: 1px solid rgba(244,240,230,0.15);
-    border-bottom: 1px solid rgba(244,240,230,0.15);
-    transition: background 0.2s;
-  }
-
+  .product-item { padding: 2.5rem; border-right: 1px solid rgba(244,240,230,0.15); border-bottom: 1px solid rgba(244,240,230,0.15); transition: background 0.2s; }
   .product-item:hover { background: rgba(244,240,230,0.04); }
   .product-item:nth-child(3n) { border-right: none; }
 
-  .item-num {
-    font-family: 'Courier Prime', monospace;
-    font-size: 2rem;
-    font-weight: 700;
-    color: rgba(244,240,230,0.12);
-    margin-bottom: 1rem;
-    line-height: 1;
-  }
+  .item-num { font-family: 'Courier Prime', monospace; font-size: 2rem; font-weight: 700; color: rgba(244,240,230,0.12); margin-bottom: 1rem; line-height: 1; }
+  .item-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--paper); margin-bottom: 0.8rem; }
+  .item-desc { font-size: 0.95rem; color: rgba(244,240,230,0.6); line-height: 1.7; font-weight: 300; }
 
-  .item-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.2rem;
-    color: var(--paper);
-    margin-bottom: 0.8rem;
-  }
+  .section-guide { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line-color); }
 
-  .item-desc {
-    font-size: 0.95rem;
-    color: rgba(244,240,230,0.6);
-    line-height: 1.7;
-    font-weight: 300;
-  }
+  .guide-left { padding: 6rem 5rem; border-right: 1px solid var(--line-color); }
+  .guide-right { padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; background: rgba(26, 39, 68, 0.02); }
 
-  /* ─── SECTION: THE GUIDE ─── */
-  .section-guide {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-top: 1px solid var(--line-color);
-  }
-
-  .guide-left {
-    padding: 6rem 5rem;
-    border-right: 1px solid var(--line-color);
-  }
-
-  .guide-right {
-    padding: 6rem 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: rgba(26, 39, 68, 0.02);
-  }
-
-  /* Book mockup */
-  .book-mockup {
-    width: 100%;
-    max-width: 340px;
-    margin: 0 auto;
-    position: relative;
-  }
+  .book-mockup { width: 100%; max-width: 340px; margin: 0 auto; position: relative; }
 
   .book-cover {
     background: var(--blueprint);
@@ -611,233 +451,104 @@
     box-shadow: 8px 8px 0 var(--blueprint-light), 12px 12px 0 rgba(26,39,68,0.2);
   }
 
-  .book-cover::before {
-    content: '';
-    position: absolute;
-    inset: 8px;
-    border: 1px solid rgba(244,240,230,0.15);
-    pointer-events: none;
-  }
+  .book-cover::before { content: ''; position: absolute; inset: 8px; border: 1px solid rgba(244,240,230,0.15); pointer-events: none; }
 
-  .book-cover-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(244,240,230,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(244,240,230,0.04) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
+  .book-cover-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(244,240,230,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(244,240,230,0.04) 1px, transparent 1px); background-size: 20px 20px; }
 
-  .book-badge {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-  }
+  .book-badge { font-family: 'Courier Prime', monospace; font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); margin-bottom: 2rem; position: relative; z-index: 1; }
+  .book-title { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--paper); line-height: 1.1; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+  .book-subtitle { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244,240,230,0.5); margin-bottom: 2rem; position: relative; z-index: 1; }
+  .book-divider { height: 1px; background: rgba(244,240,230,0.2); margin: 1.5rem 0; position: relative; z-index: 1; }
+  .book-meta { font-family: 'Courier Prime', monospace; font-size: 0.58rem; letter-spacing: 0.15em; color: rgba(244,240,230,0.4); position: relative; z-index: 1; }
 
-  .book-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.8rem;
-    color: var(--paper);
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
-    position: relative;
-    z-index: 1;
-  }
+  .book-price-tag { position: absolute; top: -12px; right: 2rem; background: var(--amber); color: var(--paper); font-family: 'Courier Prime', monospace; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; padding: 0.4rem 0.8rem; z-index: 2; }
 
-  .book-subtitle {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(244,240,230,0.5);
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 1;
-  }
+  .guide-features { list-style: none; margin: 2rem 0 3rem; }
 
-  .book-divider {
-    height: 1px;
-    background: rgba(244,240,230,0.2);
-    margin: 1.5rem 0;
-    position: relative;
-    z-index: 1;
-  }
+  .guide-features li { font-size: 1rem; color: var(--ink-light); padding: 0.7rem 0; border-bottom: 1px solid var(--line-color); display: flex; gap: 1rem; align-items: baseline; font-weight: 300; }
+  .guide-features li::before { content: attr(data-num); font-family: 'Courier Prime', monospace; font-size: 0.6rem; color: var(--amber); flex-shrink: 0; letter-spacing: 0.1em; }
 
-  .book-meta {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.15em;
-    color: rgba(244,240,230,0.4);
-    position: relative;
-    z-index: 1;
-  }
+  /* ─── SKILL SETS ─── */
+  .section-skills { position: relative; z-index: 1; display: grid; grid-template-columns: 180px 1fr; border-top: 1px solid var(--line-color); }
 
-  .book-price-tag {
-    position: absolute;
-    top: -12px;
-    right: 2rem;
-    background: var(--amber);
-    color: var(--paper);
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    padding: 0.4rem 0.8rem;
-    z-index: 2;
-  }
+  .skills-main { padding: 6rem 5rem; }
 
-  .guide-features {
-    list-style: none;
-    margin: 2rem 0 3rem;
-  }
+  .skills-intro { font-size: 1.1rem; color: var(--ink-light); line-height: 1.8; font-weight: 300; max-width: 620px; margin: 1.5rem 0 4rem; }
 
-  .guide-features li {
-    font-size: 1rem;
-    color: var(--ink-light);
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--line-color);
-    display: flex;
-    gap: 1rem;
-    align-items: baseline;
-    font-weight: 300;
-  }
+  .skills-how { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; border: 1px solid var(--line-color); margin-bottom: 4rem; background: rgba(26, 39, 68, 0.02); }
 
-  .guide-features li::before {
-    content: attr(data-num);
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    color: var(--amber);
-    flex-shrink: 0;
-    letter-spacing: 0.1em;
-  }
+  .how-step { padding: 2rem; }
 
-  /* ─── SECTION: NEWSLETTER ─── */
-  .section-newsletter {
-    position: relative;
-    z-index: 1;
-    border-top: 1px solid var(--line-color);
-    padding: 6rem 5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-  }
+  .how-divider { display: flex; align-items: center; justify-content: center; padding: 2rem 0; font-family: 'Courier Prime', monospace; font-size: 1.2rem; color: var(--amber); border-left: 1px solid var(--line-color); border-right: 1px solid var(--line-color); min-width: 48px; }
+
+  .how-num { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--amber); margin-bottom: 0.6rem; }
+  .how-label { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--blueprint); margin-bottom: 0.5rem; }
+  .how-desc { font-size: 0.88rem; color: var(--ink-light); line-height: 1.65; font-weight: 300; }
+  .how-desc code { font-family: 'Courier Prime', monospace; font-size: 0.8rem; background: rgba(26, 39, 68, 0.07); padding: 0.1em 0.4em; color: var(--blueprint); }
+
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 1px solid var(--line-color); margin-bottom: 4rem; }
+
+  .skill-card { padding: 2.5rem; border-right: 1px solid var(--line-color); border-bottom: 1px solid var(--line-color); display: flex; flex-direction: column; transition: background 0.2s; }
+  .skill-card:hover { background: rgba(26, 39, 68, 0.03); }
+  .skill-card:nth-child(3n) { border-right: none; }
+  .skill-card--soon { opacity: 0.55; }
+  .skill-card--soon:hover { background: transparent; }
+
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .card-index { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: var(--blueprint-light); opacity: 0.6; }
+  .card-status { font-family: 'Courier Prime', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--paper); background: var(--blueprint); padding: 0.2rem 0.6rem; }
+  .card-status--soon { background: transparent; color: var(--blueprint-light); border: 1px solid var(--line-color); }
+
+  .card-icon { font-size: 1.6rem; color: var(--amber); margin-bottom: 1rem; line-height: 1; }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--blueprint); margin-bottom: 0.4rem; line-height: 1.2; }
+  .card-niche { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--amber); margin-bottom: 1.5rem; text-transform: uppercase; }
+
+  .card-includes { list-style: none; flex: 1; margin-bottom: 2rem; }
+  .card-includes li { font-size: 0.9rem; color: var(--ink-light); padding: 0.55rem 0; border-bottom: 1px solid var(--line-color); display: flex; gap: 0.8rem; align-items: baseline; font-weight: 300; line-height: 1.5; }
+  .card-includes li::before { content: '—'; font-family: 'Courier Prime', monospace; font-size: 0.65rem; color: var(--blueprint-light); flex-shrink: 0; opacity: 0.5; }
+
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 1.5rem; }
+  .card-price { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--blueprint); line-height: 1; }
+
+  .card-cta { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--paper); background: var(--blueprint); padding: 0.6rem 1.2rem; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+  .card-cta:hover { background: var(--blueprint-mid); }
+  .card-cta--outline { background: transparent; color: var(--blueprint); border: 1px solid var(--blueprint); }
+  .card-cta--outline:hover { background: var(--blueprint); color: var(--paper); }
+
+  .skills-bundle { border-top: 2px solid var(--blueprint); background: var(--blueprint); padding: 4rem; position: relative; }
+  .bundle-inner { max-width: 680px; }
+
+  .bundle-label { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); margin-bottom: 1.5rem; display: inline-block; padding: 0.4rem 1rem; border: 1px solid rgba(193, 125, 60, 0.3); position: relative; }
+  .bundle-label .corner-mark { border-color: var(--amber); opacity: 0.6; }
+
+  .bundle-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--paper); line-height: 1.1; margin-bottom: 1rem; }
+  .bundle-title em { font-style: italic; color: rgba(244, 240, 230, 0.7); }
+  .bundle-desc { font-size: 1rem; color: rgba(244, 240, 230, 0.6); line-height: 1.75; font-weight: 300; margin-bottom: 2.5rem; max-width: 520px; }
+  .bundle-actions { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .bundle-saving { font-family: 'Courier Prime', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase; }
+
+  .section-newsletter { position: relative; z-index: 1; border-top: 1px solid var(--line-color); padding: 6rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
 
   .newsletter-left h2 { margin-bottom: 1rem; }
+  .newsletter-left p { font-size: 1.05rem; color: var(--ink-light); line-height: 1.75; font-weight: 300; margin-bottom: 0.8rem; }
+  .newsletter-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label { font-family: 'Courier Prime', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blueprint-light); }
 
-  .newsletter-left p {
-    font-size: 1.05rem;
-    color: var(--ink-light);
-    line-height: 1.75;
-    font-weight: 300;
-    margin-bottom: 0.8rem;
-  }
-
-  .newsletter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .form-label {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--blueprint-light);
-  }
-
-  .form-input {
-    background: transparent;
-    border: 1px solid var(--line-color);
-    border-color: var(--blueprint);
-    padding: 0.9rem 1rem;
-    font-family: 'Crimson Pro', serif;
-    font-size: 1rem;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
-  }
-
+  .form-input { background: transparent; border: 1px solid var(--blueprint); padding: 0.9rem 1rem; font-family: 'Crimson Pro', serif; font-size: 1rem; color: var(--ink); outline: none; transition: border-color 0.2s; width: 100%; }
   .form-input:focus { border-color: var(--amber); }
   .form-input::placeholder { color: var(--ink-light); opacity: 0.4; }
+  .form-note { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink-light); opacity: 0.5; }
 
-  .form-note {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    color: var(--ink-light);
-    opacity: 0.5;
-  }
+  footer { position: relative; z-index: 1; border-top: 2px solid var(--blueprint); background: var(--paper-dark); padding: 3rem 5rem; display: flex; align-items: center; justify-content: space-between; }
 
-  /* ─── FOOTER ─── */
-  footer {
-    position: relative;
-    z-index: 1;
-    border-top: 2px solid var(--blueprint);
-    background: var(--paper-dark);
-    padding: 3rem 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .footer-mark { font-family: 'Courier Prime', monospace; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blueprint); display: flex; align-items: center; gap: 0.8rem; }
+  .footer-mark::before { content: ''; display: block; width: 20px; height: 20px; border: 1.5px solid var(--blueprint); transform: rotate(45deg); flex-shrink: 0; }
+  .footer-meta { font-family: 'Courier Prime', monospace; font-size: 0.6rem; letter-spacing: 0.15em; color: var(--ink-light); opacity: 0.5; text-align: right; line-height: 1.8; }
 
-  .footer-mark {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--blueprint);
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .footer-mark::before {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 1.5px solid var(--blueprint);
-    transform: rotate(45deg);
-    flex-shrink: 0;
-  }
-
-  .footer-meta {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--ink-light);
-    opacity: 0.5;
-    text-align: right;
-    line-height: 1.8;
-  }
-
-  /* ─── ANIMATIONS ─── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ─── RESPONSIVE ─── */
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
@@ -857,7 +568,6 @@
     .section-product { padding: 4rem 2rem; }
     footer { padding: 2rem; flex-direction: column; gap: 1.5rem; text-align: center; }
     .footer-meta { text-align: center; }
-    /* Skills responsive */
     .section-skills { grid-template-columns: 1fr; }
     .skills-main { padding: 4rem 2rem; }
     .skills-how { grid-template-columns: 1fr; }
@@ -868,444 +578,92 @@
     .skills-bundle { padding: 3rem 2rem; }
     .bundle-actions { flex-direction: column; align-items: flex-start; gap: 1rem; }
   }
-
-  /* ─── SKILL SETS SECTION ─── */
-  .section-skills {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    border-top: 1px solid var(--line-color);
-  }
-
-  .skills-main {
-    padding: 6rem 5rem;
-  }
-
-  .skills-intro {
-    font-size: 1.1rem;
-    color: var(--ink-light);
-    line-height: 1.8;
-    font-weight: 300;
-    max-width: 620px;
-    margin: 1.5rem 0 4rem;
-  }
-
-  /* How it works strip */
-  .skills-how {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr auto 1fr;
-    align-items: start;
-    border: 1px solid var(--line-color);
-    margin-bottom: 4rem;
-    background: rgba(26, 39, 68, 0.02);
-  }
-
-  .how-step { padding: 2rem; }
-
-  .how-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 0;
-    font-family: 'Courier Prime', monospace;
-    font-size: 1.2rem;
-    color: var(--amber);
-    border-left: 1px solid var(--line-color);
-    border-right: 1px solid var(--line-color);
-    min-width: 48px;
-  }
-
-  .how-num {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--amber);
-    margin-bottom: 0.6rem;
-  }
-
-  .how-label {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1rem;
-    color: var(--blueprint);
-    margin-bottom: 0.5rem;
-  }
-
-  .how-desc {
-    font-size: 0.88rem;
-    color: var(--ink-light);
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  .how-desc code {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.8rem;
-    background: rgba(26, 39, 68, 0.07);
-    padding: 0.1em 0.4em;
-    color: var(--blueprint);
-  }
-
-  /* Skill card grid */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    border: 1px solid var(--line-color);
-    margin-bottom: 4rem;
-  }
-
-  .skill-card {
-    padding: 2.5rem;
-    border-right: 1px solid var(--line-color);
-    border-bottom: 1px solid var(--line-color);
-    display: flex;
-    flex-direction: column;
-    transition: background 0.2s;
-  }
-
-  .skill-card:hover { background: rgba(26, 39, 68, 0.03); }
-  .skill-card:nth-child(3n) { border-right: none; }
-
-  .skill-card--soon { opacity: 0.55; }
-  .skill-card--soon:hover { background: transparent; }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  }
-
-  .card-index {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--blueprint-light);
-    opacity: 0.6;
-  }
-
-  .card-status {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--paper);
-    background: var(--blueprint);
-    padding: 0.2rem 0.6rem;
-  }
-
-  .card-status--soon {
-    background: transparent;
-    color: var(--blueprint-light);
-    border: 1px solid var(--line-color);
-  }
-
-  .card-icon {
-    font-size: 1.6rem;
-    color: var(--amber);
-    margin-bottom: 1rem;
-    line-height: 1;
-  }
-
-  .card-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.25rem;
-    color: var(--blueprint);
-    margin-bottom: 0.4rem;
-    line-height: 1.2;
-  }
-
-  .card-niche {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
-    color: var(--amber);
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-  }
-
-  .card-includes {
-    list-style: none;
-    flex: 1;
-    margin-bottom: 2rem;
-  }
-
-  .card-includes li {
-    font-size: 0.9rem;
-    color: var(--ink-light);
-    padding: 0.55rem 0;
-    border-bottom: 1px solid var(--line-color);
-    display: flex;
-    gap: 0.8rem;
-    align-items: baseline;
-    font-weight: 300;
-    line-height: 1.5;
-  }
-
-  .card-includes li::before {
-    content: '—';
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.65rem;
-    color: var(--blueprint-light);
-    flex-shrink: 0;
-    opacity: 0.5;
-  }
-
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
-    padding-top: 1.5rem;
-  }
-
-  .card-price {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.6rem;
-    color: var(--blueprint);
-    line-height: 1;
-  }
-
-  .card-cta {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--paper);
-    background: var(--blueprint);
-    padding: 0.6rem 1.2rem;
-    text-decoration: none;
-    transition: background 0.2s;
-    white-space: nowrap;
-  }
-
-  .card-cta:hover { background: var(--blueprint-mid); }
-
-  .card-cta--outline {
-    background: transparent;
-    color: var(--blueprint);
-    border: 1px solid var(--blueprint);
-  }
-
-  .card-cta--outline:hover { background: var(--blueprint); color: var(--paper); }
-
-  /* Bundle CTA */
-  .skills-bundle {
-    border-top: 2px solid var(--blueprint);
-    background: var(--blueprint);
-    padding: 4rem;
-    position: relative;
-  }
-
-  .bundle-inner { max-width: 680px; }
-
-  .bundle-label {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--amber);
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    padding: 0.4rem 1rem;
-    border: 1px solid rgba(193, 125, 60, 0.3);
-    position: relative;
-  }
-
-  .bundle-label .corner-mark { border-color: var(--amber); opacity: 0.6; }
-
-  .bundle-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-    color: var(--paper);
-    line-height: 1.1;
-    margin-bottom: 1rem;
-  }
-
-  .bundle-title em { font-style: italic; color: rgba(244, 240, 230, 0.7); }
-
-  .bundle-desc {
-    font-size: 1rem;
-    color: rgba(244, 240, 230, 0.6);
-    line-height: 1.75;
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-    max-width: 520px;
-  }
-
-  .bundle-actions {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .bundle-saving {
-    font-family: 'Courier Prime', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--amber);
-    text-transform: uppercase;
-  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-mark">The Agency Blueprint</div>
   <ul class="nav-links">
     <li><a href="#story">About</a></li>
     <li><a href="#guide">The Guide</a></li>
-    <li><a href="#newsletter">Newsletter</a></li>
     <li><a href="#skills">Skill Sets</a></li>
+    <li><a href="#newsletter">Newsletter</a></li>
     <li><a href="https://blueprintagency.gumroad.com/l/cdaucg" target="_blank" class="nav-cta">Get the Guide</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-left">
     <div class="hero-label">Version 1.0 — March 2026</div>
     <h1>Build AI Agents.<br><em>Without Writing Code.</em></h1>
     <div class="hero-sub">Design &nbsp;·&nbsp; Deploy &nbsp;·&nbsp; Delegate</div>
-    <p class="hero-body">
-      This is not a theory book. This is not a hype document.<br>
-      This is a <strong>systems manual</strong> — written by someone who used these tools
-      to run a real business, built from scratch, alone.
-    </p>
+    <p class="hero-body">This is not a theory book. This is not a hype document.<br>This is a <strong>systems manual</strong> — written by someone who used these tools to run a real business, built from scratch, alone.</p>
     <div class="hero-actions">
       <a href="https://blueprintagency.gumroad.com/l/cdaucg" target="_blank" class="btn-primary">Get the Guide — £24</a>
       <a href="#newsletter" class="btn-secondary">Join the Newsletter</a>
     </div>
   </div>
-
   <div class="hero-right">
     <div class="blueprint-diagram">
       <div class="diagram-title">Agent Architecture — Fig. 01</div>
-
       <div class="diagram-box" style="animation-delay:0.1s">
-        <div class="corner-mark tl"></div><div class="corner-mark tr"></div>
-        <div class="corner-mark bl"></div><div class="corner-mark br"></div>
-        <div class="box-label">Input Layer</div>
-        <div class="box-title">Goal Definition</div>
-        <div class="box-note">What outcome are you pursuing?</div>
+        <div class="corner-mark tl"></div><div class="corner-mark tr"></div><div class="corner-mark bl"></div><div class="corner-mark br"></div>
+        <div class="box-label">Input Layer</div><div class="box-title">Goal Definition</div><div class="box-note">What outcome are you pursuing?</div>
       </div>
-
       <div class="diagram-connector" style="animation-delay:0.25s"></div>
-
       <div class="diagram-box highlight" style="animation-delay:0.4s">
-        <div class="box-label">Reasoning Layer</div>
-        <div class="box-title">The Brain (LLM)</div>
-        <div class="box-note">Determines steps · Interprets context</div>
+        <div class="box-label">Reasoning Layer</div><div class="box-title">The Brain (LLM)</div><div class="box-note">Determines steps · Interprets context</div>
       </div>
-
       <div class="diagram-connector" style="animation-delay:0.55s"></div>
-
       <div class="diagram-box" style="animation-delay:0.7s">
-        <div class="box-label">Action Layer</div>
-        <div class="box-title">Tools + Routing</div>
-        <div class="box-note">Search · Email · Sheets · Webhooks</div>
+        <div class="box-label">Action Layer</div><div class="box-title">Tools + Routing</div><div class="box-note">Search · Email · Sheets · Webhooks</div>
       </div>
-
       <div class="diagram-connector" style="animation-delay:0.85s"></div>
-
       <div class="diagram-box" style="animation-delay:1s">
-        <div class="box-label">Memory Layer</div>
-        <div class="box-title">Context + State</div>
-        <div class="box-note">Logs · Documents · Workflow state</div>
+        <div class="box-label">Memory Layer</div><div class="box-title">Context + State</div><div class="box-note">Logs · Documents · Workflow state</div>
       </div>
-
       <div class="diagram-connector" style="animation-delay:1.15s"></div>
-
       <div class="diagram-box" style="animation-delay:1.3s">
-        <div class="box-label">Output Layer</div>
-        <div class="box-title">Structured Result</div>
-        <div class="box-note">Draft · Report · Action · Decision</div>
+        <div class="box-label">Output Layer</div><div class="box-title">Structured Result</div><div class="box-note">Draft · Report · Action · Decision</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- THE STORY -->
 <section class="section-story" id="story">
-  <div class="section-label-vertical">
-    <span class="vertical-text">Origin / Context</span>
-  </div>
-
+  <div class="section-label-vertical"><span class="vertical-text">Origin / Context</span></div>
   <div class="story-content reveal">
     <div class="section-num">01 — The Story</div>
     <h2>I'm not a developer.<br><em>I'm a craftsman.</em></h2>
     <div class="story-text">
-      <p>
-        I'm a realism portrait artist and product maker. I built a brand, a website, an e-commerce system, and a physical product line — essentially solo, from scratch.
-      </p>
-      <p>
-        At some point I started delegating the repetitive work to AI agents. Not because I understood the technology deeply — but because I understood <strong>what I needed done</strong>, and I could think structurally about how to describe it.
-      </p>
-      <p>
-        That turned out to be enough.
-      </p>
-      <p>
-        This guide exists because most resources assume you know Python. They assume you can debug JSON errors. They assume you're comfortable with infrastructure.
-      </p>
-      <p>
-        <strong>Most people aren't. I wasn't.</strong> And I built working agent systems anyway.
-      </p>
-      <p>
-        The Agency Blueprint is what I wish had existed when I started.
-      </p>
+      <p>I'm a realism portrait artist and product maker. I built a brand, a website, an e-commerce system, and a physical product line — essentially solo, from scratch.</p>
+      <p>At some point I started delegating the repetitive work to AI agents. Not because I understood the technology deeply — but because I understood <strong>what I needed done</strong>, and I could think structurally about how to describe it.</p>
+      <p>That turned out to be enough.</p>
+      <p>This guide exists because most resources assume you know Python. They assume you can debug JSON errors. They assume you're comfortable with infrastructure.</p>
+      <p><strong>Most people aren't. I wasn't.</strong> And I built working agent systems anyway.</p>
+      <p>The Agency Blueprint is what I wish had existed when I started.</p>
     </div>
   </div>
-
   <div class="story-pull reveal">
-    <div class="pull-quote">
-      "Automation is not about replacing yourself. It is about delegating structured tasks so you can focus on judgment, creativity, and strategy."
-    </div>
+    <div class="pull-quote">"Automation is not about replacing yourself. It is about delegating structured tasks so you can focus on judgment, creativity, and strategy."</div>
     <div class="pull-attribution">— The Agency Blueprint, Preface</div>
   </div>
 </section>
 
-<!-- WHAT YOU GET -->
 <section class="section-product" id="features">
   <div class="section-num">02 — The System</div>
   <h2>Five working agents.<br><em>One clear progression.</em></h2>
-
   <div class="product-grid">
-    <div class="product-item reveal">
-      <div class="item-num">01</div>
-      <div class="item-title">The Echo Bot</div>
-      <div class="item-desc">Understand the fundamental Input → Process → Output loop. Every agent you ever build starts here.</div>
-    </div>
-    <div class="product-item reveal">
-      <div class="item-num">02</div>
-      <div class="item-title">The Web Researcher</div>
-      <div class="item-desc">Give your agent eyes. Connect it to live data. Learn how to filter signal from noise before it reaches the LLM.</div>
-    </div>
-    <div class="product-item reveal">
-      <div class="item-num">03</div>
-      <div class="item-title">The Inbox Manager</div>
-      <div class="item-desc">Introduce decision routing. Your agent reads, classifies, and acts differently based on context. This is foundational agency behaviour.</div>
-    </div>
-    <div class="product-item reveal">
-      <div class="item-num">04</div>
-      <div class="item-title">The Content Factory</div>
-      <div class="item-desc">Build a multi-stage production pipeline. Sequential dependency. Variable passing. Real output ready for publishing.</div>
-    </div>
-    <div class="product-item reveal">
-      <div class="item-num">05</div>
-      <div class="item-title">The Orchestra</div>
-      <div class="item-desc">Three specialised agents working in parallel, synthesised into one coherent output. Division of cognitive labour.</div>
-    </div>
-    <div class="product-item reveal">
-      <div class="item-num">+</div>
-      <div class="item-title">Advanced Foundations</div>
-      <div class="item-desc">Prompt architecture. Memory and retrieval. Security. Failure modes. Cost management. 25 business agent ideas to build next.</div>
-    </div>
+    <div class="product-item reveal"><div class="item-num">01</div><div class="item-title">The Echo Bot</div><div class="item-desc">Understand the fundamental Input → Process → Output loop. Every agent you ever build starts here.</div></div>
+    <div class="product-item reveal"><div class="item-num">02</div><div class="item-title">The Web Researcher</div><div class="item-desc">Give your agent eyes. Connect it to live data. Learn how to filter signal from noise before it reaches the LLM.</div></div>
+    <div class="product-item reveal"><div class="item-num">03</div><div class="item-title">The Inbox Manager</div><div class="item-desc">Introduce decision routing. Your agent reads, classifies, and acts differently based on context. This is foundational agency behaviour.</div></div>
+    <div class="product-item reveal"><div class="item-num">04</div><div class="item-title">The Content Factory</div><div class="item-desc">Build a multi-stage production pipeline. Sequential dependency. Variable passing. Real output ready for publishing.</div></div>
+    <div class="product-item reveal"><div class="item-num">05</div><div class="item-title">The Orchestra</div><div class="item-desc">Three specialised agents working in parallel, synthesised into one coherent output. Division of cognitive labour.</div></div>
+    <div class="product-item reveal"><div class="item-num">+</div><div class="item-title">Advanced Foundations</div><div class="item-desc">Prompt architecture. Memory and retrieval. Security. Failure modes. Cost management. 25 business agent ideas to build next.</div></div>
   </div>
 </section>
 
-<!-- THE GUIDE -->
 <section class="section-guide" id="guide">
   <div class="guide-left reveal">
     <div class="section-num">03 — The Guide</div>
@@ -1321,7 +679,6 @@
     </ul>
     <a href="https://blueprintagency.gumroad.com/l/cdaucg" target="_blank" class="btn-primary">Get the Guide — £24</a>
   </div>
-
   <div class="guide-right">
     <div class="book-mockup">
       <div class="book-price-tag">£24</div>
@@ -1331,61 +688,31 @@
         <div class="book-title">Design.<br>Deploy.<br>Delegate.</div>
         <div class="book-subtitle">Build AI Agents Without Writing Code</div>
         <div class="book-divider"></div>
-        <div class="book-meta">
-          PDF / 38 Pages / Instant Download<br>
-          Cambridge, England — March 2026
-        </div>
+        <div class="book-meta">PDF / 38 Pages / Instant Download<br>Cambridge, England — March 2026</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SKILL SETS -->
 <section class="section-skills" id="skills">
-
-  <div class="section-label-vertical">
-    <span class="vertical-text">Skill Sets / Modules</span>
-  </div>
-
+  <div class="section-label-vertical"><span class="vertical-text">Skill Sets / Modules</span></div>
   <div class="skills-main">
-
     <div class="section-num reveal">05 — Skill Sets</div>
     <h2 class="reveal">Pre-built intelligence.<br><em>Ready to install.</em></h2>
-
-    <p class="skills-intro reveal">
-      A skill is a reusable instruction set — a specialist module that tells Claude
-      exactly how to think, write, and operate in a specific domain.
-      Install one and your AI stops being a generalist.
-      It becomes a practitioner.
-    </p>
+    <p class="skills-intro reveal">A skill is a reusable instruction set — a specialist module that tells Claude exactly how to think, write, and operate in a specific domain. Install one and your AI stops being a generalist. It becomes a practitioner.</p>
 
     <div class="skills-how reveal">
-      <div class="how-step">
-        <div class="how-num">01</div>
-        <div class="how-label">Purchase &amp; Download</div>
-        <div class="how-desc">Receive a <code>.skill</code> file and install guide instantly via Gumroad.</div>
-      </div>
+      <div class="how-step"><div class="how-num">01</div><div class="how-label">Purchase &amp; Download</div><div class="how-desc">Receive a <code>.skill</code> file and install guide instantly via Gumroad.</div></div>
       <div class="how-divider">→</div>
-      <div class="how-step">
-        <div class="how-num">02</div>
-        <div class="how-label">Install into Claude</div>
-        <div class="how-desc">Drop the file into your Claude skills directory. One-time setup, no coding.</div>
-      </div>
+      <div class="how-step"><div class="how-num">02</div><div class="how-label">Install into Claude</div><div class="how-desc">Drop the file into your Claude skills directory. One-time setup, no coding.</div></div>
       <div class="how-divider">→</div>
-      <div class="how-step">
-        <div class="how-num">03</div>
-        <div class="how-label">Claude Activates It</div>
-        <div class="how-desc">Claude detects the relevant task and operates as a domain specialist automatically.</div>
-      </div>
+      <div class="how-step"><div class="how-num">03</div><div class="how-label">Claude Activates It</div><div class="how-desc">Claude detects the relevant task and operates as a domain specialist automatically.</div></div>
     </div>
 
     <div class="skills-grid">
 
       <div class="skill-card reveal">
-        <div class="card-header">
-          <div class="card-index">SK-01</div>
-          <div class="card-status">Available</div>
-        </div>
+        <div class="card-header"><div class="card-index">SK-01</div><div class="card-status">Available</div></div>
         <div class="card-icon">&#x2B21;</div>
         <div class="card-title">Ecommerce Operator</div>
         <div class="card-niche">For: Independent product sellers &amp; makers</div>
@@ -1403,10 +730,7 @@
       </div>
 
       <div class="skill-card reveal">
-        <div class="card-header">
-          <div class="card-index">SK-02</div>
-          <div class="card-status">Available</div>
-        </div>
+        <div class="card-header"><div class="card-index">SK-02</div><div class="card-status">Available</div></div>
         <div class="card-icon">&#x25C8;</div>
         <div class="card-title">Freelancer &amp; Consultant</div>
         <div class="card-niche">For: Solo operators &amp; service providers</div>
@@ -1424,10 +748,7 @@
       </div>
 
       <div class="skill-card reveal">
-        <div class="card-header">
-          <div class="card-index">SK-03</div>
-          <div class="card-status">Available</div>
-        </div>
+        <div class="card-header"><div class="card-index">SK-03</div><div class="card-status">Available</div></div>
         <div class="card-icon">&#x25CE;</div>
         <div class="card-title">Content Creator</div>
         <div class="card-niche">For: Creators, writers &amp; newsletter operators</div>
@@ -1445,10 +766,7 @@
       </div>
 
       <div class="skill-card reveal">
-        <div class="card-header">
-          <div class="card-index">SK-04</div>
-          <div class="card-status">Available</div>
-        </div>
+        <div class="card-header"><div class="card-index">SK-04</div><div class="card-status">Available</div></div>
         <div class="card-icon">&#x2B1F;</div>
         <div class="card-title">Tradesperson</div>
         <div class="card-niche">For: Builders, electricians, plumbers &amp; joiners</div>
@@ -1466,10 +784,7 @@
       </div>
 
       <div class="skill-card reveal">
-        <div class="card-header">
-          <div class="card-index">SK-05</div>
-          <div class="card-status">Available</div>
-        </div>
+        <div class="card-header"><div class="card-index">SK-05</div><div class="card-status">Available</div></div>
         <div class="card-icon">&#x25C7;</div>
         <div class="card-title">Agency Owner</div>
         <div class="card-niche">For: Small agency operators &amp; studio leads</div>
@@ -1487,10 +802,7 @@
       </div>
 
       <div class="skill-card skill-card--soon reveal">
-        <div class="card-header">
-          <div class="card-index">SK-06</div>
-          <div class="card-status card-status--soon">Coming Soon</div>
-        </div>
+        <div class="card-header"><div class="card-index">SK-06</div><div class="card-status card-status--soon">Coming Soon</div></div>
         <div class="card-icon">&#x2B20;</div>
         <div class="card-title">Brand Voice Kit</div>
         <div class="card-niche">For: Any business with a distinct identity</div>
@@ -1512,40 +824,27 @@
     <div class="skills-bundle reveal">
       <div class="bundle-inner">
         <div class="bundle-label">
-          <span class="corner-mark tl"></span>
-          <span class="corner-mark tr"></span>
-          <span class="corner-mark bl"></span>
-          <span class="corner-mark br"></span>
+          <span class="corner-mark tl"></span><span class="corner-mark tr"></span><span class="corner-mark bl"></span><span class="corner-mark br"></span>
           Complete Collection
         </div>
         <div class="bundle-title">All Five Skill Sets.<br><em>One price.</em></div>
-        <div class="bundle-desc">
-          Purchase the full library and install domain expertise across every part of your operation.
-          Includes all future updates to existing skill sets.
-        </div>
+        <div class="bundle-desc">Purchase the full library and install domain expertise across every part of your operation. Includes all future updates to existing skill sets.</div>
         <div class="bundle-actions">
           <a href="https://blueprintagency.gumroad.com" target="_blank" class="btn-primary">Get the Full Library — £49</a>
           <div class="bundle-saving">Save £11 vs. buying separately</div>
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- NEWSLETTER -->
 <section class="section-newsletter" id="newsletter">
   <div class="newsletter-left reveal">
     <div class="section-num">04 — Field Notes</div>
     <h2>The weekly<br><em>dispatch.</em></h2>
-    <p>
-      Practical agent builds, honest failures, workflow breakdowns, and tools worth your time. Written from experience, not from a content calendar.
-    </p>
-    <p>
-      No hype. No fluff. One email per week.
-    </p>
+    <p>Practical agent builds, honest failures, workflow breakdowns, and tools worth your time. Written from experience, not from a content calendar.</p>
+    <p>No hype. No fluff. One email per week.</p>
   </div>
-
   <div class="newsletter-right reveal">
     <div class="newsletter-form">
       <div class="form-field">
@@ -1563,33 +862,22 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-mark">The Agency Blueprint™</div>
-  <div class="footer-meta">
-    Design. Deploy. Delegate.<br>
-    Cambridge, England &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; V1.0
-  </div>
+  <div class="footer-meta">Design. Deploy. Delegate.<br>Cambridge, England &nbsp;·&nbsp; Est. 2026 &nbsp;·&nbsp; V1.0</div>
 </footer>
 
 <script>
-  // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
 </script>
 
-
 <script>
   function subscribeToNewsletter() {
     const email = document.getElementById('newsletter-email').value;
-    const name = document.getElementById('newsletter-name').value;
     const msg = document.getElementById('newsletter-msg');
     const btn = document.getElementById('newsletter-submit');
     if (!email || !email.includes('@')) {
