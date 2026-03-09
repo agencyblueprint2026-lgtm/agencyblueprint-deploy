@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undercurrent — AI Life Pattern Decoder · The Agency Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #03040a;
+  --deep: #0a0f1e;
+  --surface: #141d36;
+  --biolum: #4fc3f7;
+  --phosphor: #7ecfb3;
+  --amber: #c17d3c;
+  --ink: rgba(255,255,255,0.88);
+  --ink-mid: rgba(255,255,255,0.55);
+  --ink-low: rgba(255,255,255,0.28);
+  --ink-ghost: rgba(255,255,255,0.08);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --instrument: 'Instrument Serif', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity:0.5;
+}
+canvas#bg { position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.2rem 2.5rem;
+  background:rgba(3,4,10,0.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--ink-ghost);
+}
+.nav-brand { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--biolum); opacity:0.7; text-decoration:none; }
+.nav-right { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-low); }
+
+/* SCREENS */
+.screen { display:none; position:relative; z-index:2; min-height:100vh; }
+.screen.active { display:flex; }
+
+/* LANDING */
+#screen-landing {
+  flex-direction:column; align-items:center; justify-content:flex-start;
+  text-align:center; padding:9rem 2rem 5rem;
+}
+.landing-depth {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(79,195,247,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 15% 70%, rgba(126,207,179,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 50% at 85% 50%, rgba(45,27,110,0.15) 0%, transparent 50%);
+  pointer-events:none;
+}
+.tide-line {
+  position:absolute; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(79,195,247,0.25), rgba(126,207,179,0.15), transparent);
+  animation:tidePulse 8s ease-in-out infinite;
+}
+.tide-line-1 { top:28%; }
+.tide-line-2 { top:62%; opacity:0.4; animation-delay:4s; }
+@keyframes tidePulse { 0%,100%{opacity:0.3;transform:scaleX(0.85)} 50%{opacity:0.9;transform:scaleX(1.05)} }
+
+.eyebrow { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--biolum); opacity:0.65; margin-bottom:2rem; animation:fadeUp 1s ease both; }
+.hero-title { font-family:var(--instrument); font-size:clamp(4rem,10vw,9rem); font-weight:400; line-height:0.92; letter-spacing:-0.025em; margin-bottom:2rem; animation:fadeUp 1s 0.15s ease both; }
+.hero-title em { font-style:italic; color:rgba(79,195,247,0.65); display:block; }
+.hero-sub { font-size:clamp(1rem,1.8vw,1.2rem); font-weight:300; color:var(--ink-mid); max-width:500px; margin:0 auto 3rem; line-height:1.8; animation:fadeUp 1s 0.3s ease both; }
+.hero-sub strong { color:var(--ink); font-weight:400; }
+.begin-btn {
+  font-family:var(--mono); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--void); background:var(--biolum); border:none; padding:1.1rem 3rem;
+  cursor:pointer; transition:all 0.3s ease; animation:fadeUp 1s 0.45s ease both;
+  position:relative; overflow:hidden;
+}
+.begin-btn::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent); transform:translateX(-100%); transition:transform 0.5s ease; }
+.begin-btn:hover { background:rgba(79,195,247,0.82); transform:translateY(-2px); box-shadow:0 8px 40px rgba(79,195,247,0.25); }
+.begin-btn:hover::before { transform:translateX(100%); }
+.landing-meta { margin-top:3rem; font-family:var(--mono); font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-low); display:flex; gap:2rem; animation:fadeUp 1s 0.6s ease both; }
+.landing-meta span { display:flex; align-items:center; gap:0.5rem; }
+.landing-meta span::before { content:'—'; color:var(--biolum); opacity:0.4; }
+
+/* SCENARIO */
+#screen-scenario { flex-direction:column; align-items:center; justify-content:flex-start; padding:7rem 2rem 5rem; }
+.scenario-wrap { max-width:700px; width:100%; margin:0 auto; }
+.progress-bar { width:100%; height:1px; background:var(--ink-ghost); margin-bottom:3.5rem; position:relative; overflow:hidden; }
+.progress-fill { position:absolute; left:0; top:0; bottom:0; background:linear-gradient(90deg,var(--biolum),var(--phosphor)); transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
+.scenario-counter { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--ink-low); margin-bottom:2.5rem; display:flex; align-items:center; gap:1.2rem; }
+.scenario-counter::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--ink-ghost),transparent); }
+.scenario-title { font-family:var(--instrument); font-size:clamp(2rem,4.5vw,3.2rem); font-weight:400; font-style:italic; color:rgba(79,195,247,0.6); margin-bottom:2rem; line-height:1.1; }
+.scenario-body { font-size:1.1rem; font-weight:300; color:var(--ink); line-height:1.95; margin-bottom:3rem; opacity:0.85; }
+.scenario-body em { font-style:italic; color:rgba(255,255,255,0.96); font-weight:400; }
+.scenario-prompt { font-family:var(--mono); font-size:0.62rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-mid); margin-bottom:1.2rem; }
+.choices { display:flex; flex-direction:column; gap:0.65rem; }
+.choice {
+  display:flex; align-items:flex-start; gap:1.2rem; padding:1.15rem 1.4rem;
+  border:1px solid var(--ink-ghost); cursor:pointer; transition:all 0.25s ease;
+  background:transparent; text-align:left; width:100%; color:var(--ink-mid);
+  font-family:var(--serif); font-size:1rem; font-weight:300; line-height:1.6;
+  position:relative; overflow:hidden;
+}
+.choice::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(79,195,247,0.05),transparent); transform:translateX(-100%); transition:transform 0.35s ease; }
+.choice:hover { border-color:rgba(79,195,247,0.2); color:var(--ink); transform:translateX(3px); }
+.choice:hover::before { transform:translateX(0); }
+.choice.selected { border-color:rgba(79,195,247,0.45); background:rgba(79,195,247,0.05); color:var(--ink); pointer-events:none; }
+.choice-marker { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.12em; color:var(--biolum); opacity:0.35; flex-shrink:0; padding-top:0.25rem; transition:opacity 0.25s; }
+.choice:hover .choice-marker, .choice.selected .choice-marker { opacity:0.85; }
+.scenario-transition { opacity:0; transform:translateY(20px); transition:opacity 0.5s ease,transform 0.5s ease; }
+.scenario-transition.in { opacity:1; transform:translateY(0); }
+
+/* LOADING */
+#screen-loading { flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; gap:2.5rem; }
+.loading-title { font-family:var(--instrument); font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:400; font-style:italic; color:rgba(79,195,247,0.55); line-height:1.2; }
+.loading-sub { font-family:var(--mono); font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink-low); }
+.wave-container { display:flex; gap:6px; align-items:center; }
+.wave-bar { width:3px; background:var(--biolum); border-radius:2px; animation:waveAnim 1.4s ease-in-out infinite; opacity:0.6; }
+.wave-bar:nth-child(1){height:12px;animation-delay:0s}
+.wave-bar:nth-child(2){height:20px;animation-delay:0.1s}
+.wave-bar:nth-child(3){height:28px;animation-delay:0.2s}
+.wave-bar:nth-child(4){height:20px;animation-delay:0.3s}
+.wave-bar:nth-child(5){height:12px;animation-delay:0.4s}
+.wave-bar:nth-child(6){height:20px;animation-delay:0.5s}
+.wave-bar:nth-child(7){height:28px;animation-delay:0.4s}
+.wave-bar:nth-child(8){height:20px;animation-delay:0.3s}
+.wave-bar:nth-child(9){height:12px;animation-delay:0.2s}
+@keyframes waveAnim { 0%,100%{transform:scaleY(0.4);opacity:0.3} 50%{transform:scaleY(1);opacity:0.8} }
+.loading-status { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.18em; color:var(--ink-low); min-height:1.5em; transition:opacity 0.3s; }
+
+/* RESULTS */
+#screen-results { flex-direction:column; align-items:center; padding:7rem 2rem 6rem; }
+.results-wrap { max-width:760px; width:100%; margin:0 auto; }
+.results-eyebrow { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--biolum); opacity:0.6; margin-bottom:1.2rem; display:flex; align-items:center; gap:1rem; }
+.results-eyebrow::before { content:''; display:block; width:20px; height:1px; background:var(--biolum); opacity:0.4; }
+
+.archetype-hero { border:1px solid rgba(79,195,247,0.15); padding:3rem; margin-bottom:3rem; position:relative; background:rgba(79,195,247,0.03); }
+.archetype-hero::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(79,195,247,0.4),transparent); }
+.archetype-label { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--biolum); opacity:0.5; margin-bottom:0.8rem; }
+.archetype-name { font-family:var(--instrument); font-size:clamp(2.5rem,6vw,4.5rem); font-weight:400; line-height:1; letter-spacing:-0.02em; color:var(--ink); margin-bottom:1.2rem; }
+.archetype-name em { font-style:italic; color:rgba(79,195,247,0.65); }
+.archetype-essence { font-size:1.15rem; font-weight:300; color:var(--ink-mid); font-style:italic; line-height:1.6; }
+
+.result-section { margin-bottom:2.5rem; padding-bottom:2.5rem; border-bottom:1px solid var(--ink-ghost); opacity:0; transform:translateY(16px); transition:opacity 0.6s ease,transform 0.6s ease; }
+.result-section.revealed { opacity:1; transform:translateY(0); }
+.result-section:last-of-type { border-bottom:none; }
+.result-label { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--phosphor); opacity:0.55; margin-bottom:1rem; display:flex; align-items:center; gap:0.8rem; }
+.result-label::before { content:'—'; opacity:0.5; }
+.result-title { font-family:var(--instrument); font-size:clamp(1.4rem,2.5vw,2rem); font-weight:400; font-style:italic; color:rgba(79,195,247,0.6); margin-bottom:1rem; line-height:1.2; }
+.result-body { font-size:1.05rem; font-weight:300; color:var(--ink-mid); line-height:1.85; }
+.result-body p { margin-bottom:1rem; }
+.result-body strong { color:var(--ink); font-weight:400; }
+.result-body em { font-style:italic; color:rgba(255,255,255,0.85); }
+
+.stream-cursor { display:inline-block; width:2px; height:1em; background:var(--biolum); opacity:0.7; animation:blink 0.9s step-end infinite; vertical-align:text-bottom; margin-left:2px; }
+@keyframes blink { 0%,100%{opacity:0.7} 50%{opacity:0} }
+
+.dimensions-grid { display:grid; gap:1rem; margin-top:1rem; }
+.dimension-row { display:grid; grid-template-columns:120px 1fr 120px; align-items:center; gap:1rem; }
+.dim-label { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-low); }
+.dim-label.right { text-align:right; }
+.dim-track { height:2px; background:var(--ink-ghost); position:relative; border-radius:2px; }
+.dim-marker { position:absolute; top:50%; width:8px; height:8px; border-radius:50%; background:var(--biolum); transform:translate(-50%,-50%); box-shadow:0 0 10px rgba(79,195,247,0.5); transition:left 1s cubic-bezier(0.4,0,0.2,1); }
+
+.micro-shifts { display:flex; flex-direction:column; gap:1rem; margin-top:0.5rem; }
+.micro-shift { display:flex; gap:1.2rem; padding:1.2rem 1.5rem; border:1px solid var(--ink-ghost); align-items:flex-start; }
+.shift-num { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.15em; color:var(--biolum); opacity:0.45; flex-shrink:0; padding-top:0.2rem; }
+.shift-text { font-size:1rem; font-weight:300; color:var(--ink-mid); line-height:1.65; }
+
+.tab-bridge { margin-top:4rem; padding:3rem; border:1px solid rgba(193,125,60,0.2); position:relative; background:rgba(193,125,60,0.03); opacity:0; transform:translateY(20px); transition:opacity 0.8s ease,transform 0.8s ease; }
+.tab-bridge.revealed { opacity:1; transform:translateY(0); }
+.tab-bridge::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(193,125,60,0.5),transparent); }
+.bridge-label { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--amber); opacity:0.6; margin-bottom:1.2rem; }
+.bridge-title { font-family:var(--instrument); font-size:clamp(1.4rem,2.5vw,2rem); font-weight:400; color:var(--ink); line-height:1.25; margin-bottom:1rem; }
+.bridge-title em { font-style:italic; color:rgba(193,125,60,0.7); }
+.bridge-body { font-size:1rem; font-weight:300; color:var(--ink-mid); line-height:1.8; margin-bottom:2rem; }
+.bridge-btn { display:inline-block; font-family:var(--mono); font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--void); background:var(--amber); border:none; padding:1rem 2.5rem; cursor:pointer; text-decoration:none; transition:all 0.3s ease; }
+.bridge-btn:hover { background:rgba(193,125,60,0.85); transform:translateY(-2px); box-shadow:0 6px 30px rgba(193,125,60,0.25); }
+
+.share-row { display:flex; align-items:center; gap:1rem; margin-top:2.5rem; padding-top:2.5rem; border-top:1px solid var(--ink-ghost); opacity:0; transition:opacity 0.6s ease; }
+.share-row.revealed { opacity:1; }
+.share-label { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-low); white-space:nowrap; }
+.share-url { flex:1; font-family:var(--mono); font-size:0.6rem; color:var(--ink-low); background:var(--ink-ghost); border:1px solid transparent; padding:0.6rem 0.8rem; letter-spacing:0.05em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.copy-btn { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--biolum); background:transparent; border:1px solid rgba(79,195,247,0.2); padding:0.6rem 1rem; cursor:pointer; transition:all 0.2s ease; white-space:nowrap; }
+.copy-btn:hover { background:rgba(79,195,247,0.06); border-color:rgba(79,195,247,0.4); }
+
+footer { position:relative; z-index:2; border-top:1px solid var(--ink-ghost); padding:2rem 2.5rem; display:flex; align-items:center; justify-content:space-between; max-width:760px; margin:0 auto; width:100%; }
+.footer-mark { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--biolum); opacity:0.35; }
+.footer-back { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-low); text-decoration:none; transition:color 0.2s; }
+.footer-back:hover { color:var(--ink-mid); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+@media(max-width:600px) {
+  .dimension-row { grid-template-columns:70px 1fr 70px; }
+  .archetype-hero { padding:2rem 1.5rem; }
+  .tab-bridge { padding:2rem 1.5rem; }
+  .share-row { flex-wrap:wrap; }
+  footer { flex-direction:column; gap:1rem; text-align:center; }
+}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<nav>
+  <a href="/index.html" class="nav-brand">The Agency Blueprint</a>
+  <div class="nav-right" id="nav-right">Undercurrent · Pattern Decoder</div>
+</nav>
+
+<section id="screen-landing" class="screen active">
+  <div class="landing-depth"></div>
+  <div class="tide-line tide-line-1"></div>
+  <div class="tide-line tide-line-2"></div>
+  <div class="eyebrow">AI Life Pattern Decoder</div>
+  <h1 class="hero-title">Under<em>current</em></h1>
+  <p class="hero-sub">Not a quiz. Not a chatbot. Not a personality test.<br><strong>Ten immersive scenarios</strong> that surface the unconscious patterns quietly running your life — then decode what they mean.</p>
+  <button class="begin-btn" onclick="startDecode()">Begin the Decode</button>
+  <div class="landing-meta">
+    <span>10 Scenarios</span>
+    <span>6 Archetypes</span>
+    <span>Free · No account</span>
+  </div>
+</section>
+
+<section id="screen-scenario" class="screen">
+  <div class="scenario-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div id="scenario-content" class="scenario-transition"></div>
+  </div>
+</section>
+
+<section id="screen-loading" class="screen">
+  <div class="loading-title">Reading the pattern<br>of your responses.</div>
+  <div class="wave-container">
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+    <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+  </div>
+  <div class="loading-status" id="loading-status">Analysing tension patterns…</div>
+</section>
+
+<section id="screen-results" class="screen">
+  <div class="results-wrap">
+    <div class="results-eyebrow">Your Undercurrent Decode</div>
+    <div id="results-content"></div>
+  </div>
+  <footer>
+    <div class="footer-mark">Undercurrent™</div>
+    <a href="/index.html" class="footer-back">← The Agency Blueprint</a>
+  </footer>
+</section>
+
+<script>
+// CANVAS
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+class Particle {
+  constructor(init) {
+    this.x = Math.random() * (W||800);
+    this.y = init ? Math.random()*(H||600) : (H||600)+10;
+    this.vx = (Math.random()-0.5)*0.25;
+    this.vy = -(Math.random()*0.35+0.08);
+    this.life = init ? Math.random()*300 : 0;
+    this.maxLife = Math.random()*350+180;
+    this.size = Math.random()*1.8+0.4;
+    this.hue = Math.random()>0.55 ? 195 : 162;
+    this.drift = Math.random()*Math.PI*2;
+    this.driftSpeed = Math.random()*0.006+0.002;
+  }
+  update() {
+    this.life++; this.drift+=this.driftSpeed;
+    this.x+=this.vx+Math.sin(this.drift)*0.15;
+    this.y+=this.vy;
+    if(this.life>this.maxLife||this.y<-10) Object.assign(this,new Particle(false));
+  }
+  draw() {
+    const a=Math.sin((this.life/this.maxLife)*Math.PI)*0.35;
+    ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=`hsla(${this.hue},68%,68%,${a})`; ctx.fill();
+  }
+}
+function initBg() { resize(); particles=Array.from({length:55},()=>new Particle(true)); }
+function animBg() { requestAnimationFrame(animBg); ctx.clearRect(0,0,W,H); particles.forEach(p=>{p.update();p.draw();}); }
+window.addEventListener('resize',resize);
+initBg(); animBg();
+
+// SCENARIOS
+const SCENARIOS = [
+  {
+    id:1, title:'The Weight', dimension:'Action ↔ Reflection',
+    body:`You have been carrying something heavy for a long time. A bag, a case, a box — it doesn't matter what it looks like. What matters is that it has been with you so long you've stopped noticing the effort.<br><br>Today you arrive somewhere and you can set it down. You don't have to pick it up again. Nobody is watching. There is no obligation.<br><br>But as you release it — as the weight leaves your hands for the first time in years — <em>you realise you don't know who you are without it.</em>`,
+    prompt:'What happens next?',
+    choices:['Relief moves through you immediately — you straighten up and don\'t look back. It was never yours to carry.','You reach down and pick it back up. The discomfort of carrying it is at least familiar.','You sit beside it. You don\'t decide. Not yet.','You open it — finally — to see what\'s actually inside.']
+  },
+  {
+    id:2, title:'The Stranger', dimension:'External ↔ Internal',
+    body:`A stranger sits down opposite you in a place you didn't expect anyone to find you. They look at you for a long moment — unhurried, certain — and say:<br><br><em>"I know what you're actually good at. Not what you tell people. What you actually are."</em><br><br>They are completely calm. There is no threat in it. They are simply waiting.`,
+    prompt:'What is your first instinct?',
+    choices:['Ask them what they see — immediately, without hesitation.','Feel exposed. Want to leave before they say it out loud.','Challenge them — nobody knows you better than you know yourself.','Feel something release. Like something is finally being said that needed saying.']
+  },
+  {
+    id:3, title:'The Mirror', dimension:'Future ↔ Present',
+    body:`You are standing before a mirror. But the reflection looking back at you is ten years older. Not worse — not better. Just settled in a way you aren't yet.<br><br>They watch you with an expression you can't quite read. They don't speak. But after a moment they hold something up — <em>something that matters</em> — and show it to you through the glass.`,
+    prompt:'What do they show you?',
+    choices:['Something you built or made with your hands — a tangible thing that exists because you made it exist.','Someone you love. Not an image of them — the feeling of them.','A place you\'ve never been to but have thought about.','A version of yourself you used to believe in before you stopped.']
+  },
+  {
+    id:4, title:'The Map', dimension:'Novelty ↔ Stability',
+    body:`You are given a map of a territory you have never visited. The map is detailed — roads marked, terrain noted, warnings written at the edges in small careful text.<br><br>You could follow it exactly. You could fold it away and navigate by instinct. Or you could study it so completely that by the time you feel ready to leave, <em>the light has already changed.</em>`,
+    prompt:'Which version of you shows up?',
+    choices:['You follow the map precisely. Deviation feels like failure.','You glance at it once to understand the shape of things, then trust your feet.','You study it until you feel ready. Which takes longer than you\'d admit.','You redraw it as you go — correcting the map against what you actually find.']
+  },
+  {
+    id:5, title:'The Fire', dimension:'Connection ↔ Autonomy',
+    body:`There is a fire — not destructive, a controlled burn — and a group of people gathered around it. Some are talking. Some are silent. Some are watching you from the other side of the flames.<br><br>You could move into the group. You could stay at the edge, close enough to feel the warmth. You could tend the fire itself — present and useful, but not quite part of the circle.<br><br><em>Or you could go to the person watching you.</em>`,
+    prompt:'Where do you go?',
+    choices:['Into the group — you move toward the voices and the warmth of being among people.','The edge. Close enough to belong without being consumed by it.','You tend the fire. Present, useful, not quite in the circle but not outside it either.','To the person watching you, across the flames. You want to know what they see.']
+  },
+  {
+    id:6, title:'The Signal', dimension:'Control ↔ Surrender',
+    body:`You receive a message from someone you trust completely — or trusted, once. It reads only:<br><br><em>"It's time."</em><br><br>No context. No explanation. You don't know if it's an invitation, a warning, or a farewell. There is no way to ask. There is only the message, and what you do with it.`,
+    prompt:'What do you feel first?',
+    choices:['Clarity. You know exactly what this means even without the context.','Dread. Some part of you has been waiting for this and didn\'t want it to come.','Curiosity. You need to understand before you can respond to anything.','Grief. Something is ending. You already knew it before the message arrived.']
+  },
+  {
+    id:7, title:'The Tide', dimension:'Novelty ↔ Stability',
+    body:`You are standing at the edge of the ocean. The tide is going out — faster than makes sense, further than it should — exposing the seabed. Strange formations in the sand. Objects half-buried. Things that have been underwater so long they've changed shape.<br><br>Something is being revealed. But you know how tides work. <em>It will return, and when it does, it comes fast.</em>`,
+    prompt:'What do you do?',
+    choices:['Walk out immediately — you might not get another chance to see what\'s there.','Watch from the shore. Study what\'s revealed before committing to the exposed ground.','Stay fixed on the waterline. You\'re watching the return, not what\'s being uncovered.','Take one thing from the exposed ground and bring it back before the water returns.']
+  },
+  {
+    id:8, title:'The Room', dimension:'Future ↔ Present',
+    body:`You enter a room where every version of a decision you didn't make is playing out simultaneously — quiet scenes, like films running on muted screens. The life you'd have had if you'd stayed. The path you set aside. The relationship you didn't pursue. The work you put down and never returned to.<br><br>They are not better or worse than what you chose. <em>They are simply other.</em>`,
+    prompt:'How long do you stay?',
+    choices:['You don\'t. You step back through the door immediately.','Long enough to feel the shape of each one. Then you leave without looking back.','You stay until you\'ve watched every screen completely.','You look for the version of yourself that seems most at peace — and study that one.']
+  },
+  {
+    id:9, title:'The Door', dimension:'Control ↔ Surrender',
+    body:`You are walking through a building you know well — your home, your workplace, somewhere entirely familiar. But today there is a door you have never noticed before.<br><br>It is closed. There is no handle. You press your hand flat against it and it opens inward — slowly, into darkness. You cannot see what is inside. But you can feel that <em>something is in there.</em>`,
+    prompt:'What do you do?',
+    choices:['Step through immediately. The darkness is the point.','Stand at the threshold and wait for your eyes to adjust.','Walk away. If it had mattered, you\'d have found it long before now.','Find someone before you decide — this doesn\'t feel like a decision to make alone.']
+  },
+  {
+    id:10, title:'The Inheritance', dimension:'External ↔ Internal',
+    body:`Someone has left you something — not money, not objects. They've left you their <em>role</em>. Their place in something that mattered deeply to people who depended on them.<br><br>Those people now look to you. Not because you asked. Not because you were chosen. Simply because you are here and they need someone to be the thing that person was.<br><br>You didn't ask for this. You don't know if you want it.`,
+    prompt:'What moves through you first?',
+    choices:['Responsibility. You step into it because someone has to, and you are here.','Resentment. This was handed to you without asking. That matters.','Fear. What if you can\'t be what they were? What if you fail them?','Purpose. This is, somehow, exactly what you were built for — even if you never said so.']
+  }
+];
+
+// STATE
+let currentScenario = 0;
+let responses = [];
+
+// SCREENS
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startDecode() {
+  currentScenario=0; responses=[];
+  showScreen('screen-scenario');
+  renderScenario(0);
+}
+
+function renderScenario(index) {
+  const s = SCENARIOS[index];
+  document.getElementById('progress-fill').style.width = ((index/SCENARIOS.length)*100)+'%';
+  document.getElementById('nav-right').textContent = `${index+1} / ${SCENARIOS.length}`;
+  const html = `
+    <div class="scenario-counter">Scenario ${String(index+1).padStart(2,'0')} of ${SCENARIOS.length}</div>
+    <h2 class="scenario-title">${s.title}</h2>
+    <p class="scenario-body">${s.body}</p>
+    <div class="scenario-prompt">${s.prompt}</div>
+    <div class="choices">${s.choices.map((c,i)=>`
+      <button class="choice" onclick="selectChoice(${index},${i},this)">
+        <span class="choice-marker">${String.fromCharCode(65+i)}</span>${c}
+      </button>`).join('')}
+    </div>`;
+  const el = document.getElementById('scenario-content');
+  el.classList.remove('in');
+  el.innerHTML = html;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('in')));
+}
+
+function selectChoice(scenarioIndex, choiceIndex, btn) {
+  document.querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));
+  btn.classList.add('selected');
+  responses[scenarioIndex] = {
+    scenario: SCENARIOS[scenarioIndex].title,
+    dimension: SCENARIOS[scenarioIndex].dimension,
+    choice: choiceIndex,
+    text: SCENARIOS[scenarioIndex].choices[choiceIndex]
+  };
+  setTimeout(()=>{
+    if(scenarioIndex+1 < SCENARIOS.length) { currentScenario=scenarioIndex+1; renderScenario(currentScenario); }
+    else beginAnalysis();
+  }, 700);
+}
+
+const statusMessages = ['Analysing tension patterns…','Mapping the six dimensions…','Identifying your undercurrent…','Locating blind spot indicators…','Reading trajectory signals…','Synthesising your decode…'];
+
+async function beginAnalysis() {
+  showScreen('screen-loading');
+  let si=0;
+  const statusEl = document.getElementById('loading-status');
+  const interval = setInterval(()=>{ si=(si+1)%statusMessages.length; statusEl.textContent=statusMessages[si]; }, 2200);
+  try {
+    const decode = await generateDecode();
+    clearInterval(interval);
+    showResults(decode);
+  } catch(e) {
+    clearInterval(interval);
+    showResults(getFallbackDecode());
+  }
+}
+
+async function generateDecode() {
+  const summary = responses.map((r,i)=>`Scenario ${i+1} — "${r.scenario}" (${r.dimension}): Chose option ${String.fromCharCode(65+r.choice)} — "${r.text}"`).join('\n');
+  const prompt = `You are Undercurrent — a precise, psychologically sophisticated AI that decodes life patterns from scenario responses. Your voice is cool and exact going in, warm and penetrating coming out. You never generalise. You read the specific pattern of this person's choices and reflect something back they could not have articulated themselves.
+
+The person completed 10 immersive life scenarios. Here are their responses:
+
+${summary}
+
+The six archetypes are:
+- THE ARCHITECT: Core drive to build something that outlasts them. Most alive making order from complexity. Shadow: The Nomad.
+- THE NOMAD: Core drive to remain uncontained. Authentic, moves toward the next honest version of self. Shadow: The Anchor.
+- THE ANCHOR: Core drive to be the thing that holds. Steady, the person others lean on. Shadow: The Catalyst.
+- THE CATALYST: Core drive to make things happen that wouldn't happen without them. Ignites things, moves on. Shadow: The Sentinel.
+- THE ORACLE: Core drive to understand what others can't yet see. Pattern recognition, lives slightly ahead. Shadow: The Architect.
+- THE SENTINEL: Core drive to protect what matters. Watchful, loyal, holds boundaries. Shadow: The Nomad.
+
+The six dimensions (each person sits somewhere on each spectrum):
+1. Control ↔ Surrender
+2. Novelty ↔ Stability
+3. Connection ↔ Autonomy
+4. Action ↔ Reflection
+5. Future ↔ Present
+6. External ↔ Internal
+
+Respond with ONLY a valid JSON object in exactly this structure:
+{
+  "archetype": "The [Name]",
+  "essence": "One sentence that captures the core pattern. Specific, not generic.",
+  "pattern": "Two paragraphs separated by a blank line. Read the specific choices they made and reflect the pattern back. Reference their actual responses without quoting them directly. Be penetrating and precise. This should feel uncomfortably accurate.",
+  "dimensions": {
+    "control_surrender": 0.6,
+    "novelty_stability": 0.3,
+    "connection_autonomy": 0.7,
+    "action_reflection": 0.4,
+    "future_present": 0.65,
+    "external_internal": 0.5
+  },
+  "blind_spot": {
+    "title": "Short evocative title for their blind spot",
+    "body": "One paragraph. The specific pattern working against them that they cannot see from inside it. Name it precisely."
+  },
+  "shadow": {
+    "archetype": "The [Shadow Archetype Name]",
+    "body": "One paragraph. Why they resist this archetype and what that resistance reveals about them."
+  },
+  "trajectory": {
+    "title": "Short title for their trajectory drift",
+    "body": "One paragraph. Where their current patterns are actually taking them versus where they think they're going. Honest, not brutal."
+  },
+  "micro_shifts": [
+    "Specific, small, actionable intervention 1 — precise to their pattern",
+    "Specific, small, actionable intervention 2 — precise to their pattern",
+    "Specific, small, actionable intervention 3 — precise to their pattern"
+  ],
+  "tab_bridge": {
+    "title": "A title that bridges their archetype to The Agency Blueprint — specific to who they are",
+    "body": "Two sentences. Speak directly to this archetype's specific friction with building something real. Then say why The Agency Blueprint was built for exactly this. No hype. Honest and direct."
+  }
+}
+Dimensions values: 0.0 = fully left pole, 1.0 = fully right pole, 0.5 = balanced.
+Return ONLY the JSON. No preamble, no explanation, no markdown fences.`;
+
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1800, messages:[{role:'user',content:prompt}] })
+  });
+  if(!response.ok) throw new Error('API '+response.status);
+  const data = await response.json();
+  const text = data.content.map(b=>b.text||'').join('');
+  return JSON.parse(text.replace(/```json|```/g,'').trim());
+}
+
+function showResults(decode) {
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify({decode,responses}))));
+  const shareUrl = window.location.origin+'/decode.html?r='+encoded;
+
+  // Fix archetype name display
+  const archetypeName = decode.archetype.replace('The ','The <em>') + '</em>';
+
+  const html = `
+    <div class="archetype-hero">
+      <div class="archetype-label">Your Undercurrent</div>
+      <div class="archetype-name">${archetypeName}</div>
+      <div class="archetype-essence">${decode.essence}</div>
+    </div>
+    <div class="result-section" id="rs-pattern">
+      <div class="result-label">The Pattern</div>
+      <div class="result-body" id="stream-pattern"><span class="stream-cursor"></span></div>
+    </div>
+    <div class="result-section" id="rs-dimensions">
+      <div class="result-label">Six Dimensions</div>
+      <div class="dimensions-grid" id="dim-grid"></div>
+    </div>
+    <div class="result-section" id="rs-blind">
+      <div class="result-label">Blind Spot</div>
+      <div class="result-title">${decode.blind_spot.title}</div>
+      <div class="result-body" id="stream-blind"><span class="stream-cursor"></span></div>
+    </div>
+    <div class="result-section" id="rs-shadow">
+      <div class="result-label">Shadow Pattern</div>
+      <div class="result-title">${decode.shadow.archetype}</div>
+      <div class="result-body" id="stream-shadow"><span class="stream-cursor"></span></div>
+    </div>
+    <div class="result-section" id="rs-trajectory">
+      <div class="result-label">Trajectory Drift</div>
+      <div class="result-title">${decode.trajectory.title}</div>
+      <div class="result-body" id="stream-trajectory"><span class="stream-cursor"></span></div>
+    </div>
+    <div class="result-section" id="rs-shifts">
+      <div class="result-label">Three Micro-Shifts</div>
+      <div class="micro-shifts">${decode.micro_shifts.map((s,i)=>`
+        <div class="micro-shift"><span class="shift-num">0${i+1}</span><span class="shift-text">${s}</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="tab-bridge" id="tab-bridge">
+      <div class="bridge-label">What comes next</div>
+      <div class="bridge-title">${decode.tab_bridge.title}</div>
+      <div class="bridge-body">${decode.tab_bridge.body}</div>
+      <a href="https://blueprintagency.gumroad.com/l/cdaucg" class="bridge-btn" target="_blank">Get The Agency Blueprint — £24</a>
+    </div>
+    <div class="share-row" id="share-row">
+      <span class="share-label">Your permanent link</span>
+      <input class="share-url" id="share-url-input" value="${shareUrl}" readonly>
+      <button class="copy-btn" onclick="copyUrl()">Copy</button>
+    </div>`;
+
+  document.getElementById('results-content').innerHTML = html;
+  showScreen('screen-results');
+  document.getElementById('nav-right').textContent = decode.archetype;
+  history.replaceState(null,'','/decode.html?r='+encoded);
+
+  revealSection('rs-pattern');
+  streamSection('stream-pattern', decode.pattern, 0, ()=>{
+    revealSection('rs-dimensions');
+    renderDimensions(decode.dimensions);
+    setTimeout(()=>{
+      revealSection('rs-blind');
+      streamSection('stream-blind', decode.blind_spot.body, 0, ()=>{
+        revealSection('rs-shadow');
+        streamSection('stream-shadow', decode.shadow.body, 0, ()=>{
+          revealSection('rs-trajectory');
+          streamSection('stream-trajectory', decode.trajectory.body, 0, ()=>{
+            setTimeout(()=>{
+              revealSection('rs-shifts');
+              setTimeout(()=>{
+                document.getElementById('tab-bridge').classList.add('revealed');
+                setTimeout(()=>document.getElementById('share-row').classList.add('revealed'), 600);
+              }, 600);
+            }, 400);
+          });
+        });
+      });
+    }, 400);
+  });
+}
+
+function streamSection(elId, text, delay, onComplete) {
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const paragraphs = text.split(/\n\n+/);
+  const fullHtml = paragraphs.map(p=>`<p>${p}</p>`).join('');
+  const chars = fullHtml.split('');
+  let i=0;
+  el.innerHTML = '<span class="stream-cursor"></span>';
+  function tick() {
+    if(i>=chars.length) { el.innerHTML=fullHtml; if(onComplete) setTimeout(onComplete,300); return; }
+    const batch = Math.min(4, chars.length-i);
+    el.innerHTML = chars.slice(0,i+batch).join('')+'<span class="stream-cursor"></span>';
+    i+=batch;
+    setTimeout(tick,18);
+  }
+  setTimeout(tick, delay);
+}
+
+function revealSection(id) {
+  const el = document.getElementById(id);
+  if(el) el.classList.add('revealed');
+}
+
+function renderDimensions(dims) {
+  const labels = [
+    ['Control','Surrender',dims.control_surrender],
+    ['Novelty','Stability',dims.novelty_stability],
+    ['Connection','Autonomy',dims.connection_autonomy],
+    ['Action','Reflection',dims.action_reflection],
+    ['Future','Present',dims.future_present],
+    ['External','Internal',dims.external_internal],
+  ];
+  document.getElementById('dim-grid').innerHTML = labels.map(([l,r,v])=>`
+    <div class="dimension-row">
+      <span class="dim-label">${l}</span>
+      <div class="dim-track"><div class="dim-marker" style="left:${v*100}%"></div></div>
+      <span class="dim-label right">${r}</span>
+    </div>`).join('');
+}
+
+function copyUrl() {
+  const input = document.getElementById('share-url-input');
+  navigator.clipboard.writeText(input.value).then(()=>{
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent='Copied';
+    setTimeout(()=>btn.textContent='Copy',2000);
+  });
+}
+
+function checkRestore() {
+  const params = new URLSearchParams(window.location.search);
+  const r = params.get('r');
+  if(r) {
+    try {
+      const {decode,responses:saved} = JSON.parse(decodeURIComponent(escape(atob(r))));
+      responses = saved||[];
+      showResults(decode);
+      return true;
+    } catch(e) { console.warn('Could not restore',e); }
+  }
+  return false;
+}
+
+function getFallbackDecode() {
+  return {
+    archetype:"The Catalyst",
+    essence:"You change the trajectory of things around you without needing to be at the centre of them.",
+    pattern:"The shape of your responses reveals someone who moves toward meaning rather than safety. When given a threshold, you cross it. When given a weight, you examine it rather than simply carrying or dropping it.\n\nThere is a pattern here of someone who understands that the most important information lives in the moment of transition — not before, not after. You have learned, probably through experience rather than theory, that clarity comes from contact with the unknown rather than from studying it from a distance.",
+    dimensions:{control_surrender:0.65,novelty_stability:0.7,connection_autonomy:0.55,action_reflection:0.6,future_present:0.5,external_internal:0.45},
+    blind_spot:{title:"The Exit Before the Depth",body:"You move well — but movement has become its own comfort. The pattern that works against you is leaving just as things begin to require staying. Not because you are afraid of commitment, but because the ignition phase is where you are most alive. What comes after — the tending, the maintenance, the slow compounding — feels like diminishment rather than deepening."},
+    shadow:{archetype:"The Sentinel",body:"You resist the Sentinel's watchfulness because it looks, from the outside, like fear. But what you're actually resisting is the idea that some things are worth protecting rather than transcending. The Sentinel knows that constancy is its own form of power — and that knowledge is uncomfortable for someone who has always moved."},
+    trajectory:{title:"Brilliant But Unfinished",body:"The pattern of your current responses is taking you toward a life of significant impact in scattered form. You will change many things. Some of them won't know you were the reason. The drift is that you leave before the work consolidates — before the thing you started becomes the thing it was always capable of being."},
+    micro_shifts:["Name one thing you have left at 80% and give it thirty more days before deciding whether to set it down.","Before beginning something new, ask: am I moving toward this, or away from the last thing?","Find one person who has stayed in something long enough to see it become what it was meant to be — and ask them what that required."],
+    tab_bridge:{title:"You already know what to build. What's missing is the infrastructure to stay.",body:"Catalysts don't lack vision or energy — they leave before those things have a structure to live inside. The Agency Blueprint was built precisely for this: not to slow you down, but to give the things you start a place to continue without you having to carry them alone."}
+  };
+}
+
+if(!checkRestore()) showScreen('screen-landing');
+</script>
+</body>
+</html>
