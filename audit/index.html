@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agency Audit Intelligence — The Agency Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0c0c0e;
+  --ink-2: #131316;
+  --ink-3: #1a1a1f;
+  --ink-4: #222228;
+  --wire: #2c2c35;
+  --wire-2: #38383f;
+  --ghost: #4a4a55;
+  --mist: #7a7a88;
+  --paper: #e8e6e0;
+  --white: #f4f2ee;
+  --signal: #00d4aa;
+  --signal-dim: rgba(0,212,170,0.12);
+  --signal-glow: rgba(0,212,170,0.06);
+  --warn: #e8915a;
+  --warn-dim: rgba(232,145,90,0.15);
+  --critical: #e85a5a;
+  --critical-dim: rgba(232,90,90,0.12);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--sans);
+  font-weight: 300;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Noise texture */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Layout */
+.shell {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+}
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--wire);
+  margin-bottom: 0;
+}
+
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  color: var(--signal);
+  text-transform: uppercase;
+}
+
+.nav-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.01em;
+}
+
+.nav-tag {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--ghost);
+  border: 1px solid var(--wire);
+  padding: 4px 10px;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 72px 0 56px;
+  border-bottom: 1px solid var(--wire);
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  align-items: end;
+}
+
+.hero-left {}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--signal);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--signal);
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(44px, 5.5vw, 70px);
+  font-weight: 300;
+  line-height: 1.03;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--paper);
+}
+
+.hero h1 strong {
+  font-weight: 600;
+  color: var(--signal);
+}
+
+.hero-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--mist);
+  line-height: 1.8;
+  max-width: 420px;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 4px;
+}
+
+.agent-spec {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.spec-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ghost);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.spec-row::before {
+  content: '—';
+  color: var(--wire-2);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.spec-row span {
+  color: var(--mist);
+}
+
+/* ── FORM ── */
+.form-section {
+  padding: 48px 0;
+}
+
+.form-wrap {
+  background: var(--ink-2);
+  border: 1px solid var(--wire);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--signal) 0%, rgba(0,212,170,0.3) 40%, transparent 70%);
+}
+
+.form-inner {
+  padding: 40px 44px;
+}
+
+.form-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--signal);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--wire);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 28px;
+  margin-bottom: 28px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.field.span-2 { grid-column: 1 / -1; }
+
+.field label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--mist);
+  text-transform: uppercase;
+}
+
+.field input,
+.field textarea,
+.field select {
+  background: var(--ink-3);
+  border: 1px solid var(--wire);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  padding: 13px 16px;
+  outline: none;
+  border-radius: 0;
+  appearance: none;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ghost);
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: var(--signal);
+  background: var(--ink-4);
+}
+
+.field textarea {
+  min-height: 88px;
+  resize: vertical;
+  line-height: 1.65;
+}
+
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%234a4a55' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.field select option { background: #1a1a1f; }
+
+/* Depth selector */
+.depth-wrap {
+  display: flex;
+  gap: 0;
+}
+
+.depth-opt {
+  flex: 1;
+  padding: 12px 10px;
+  background: var(--ink-3);
+  border: 1px solid var(--wire);
+  border-right: none;
+  color: var(--ghost);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.depth-opt:last-child { border-right: 1px solid var(--wire); }
+.depth-opt:hover { color: var(--mist); background: var(--ink-4); }
+
+.depth-opt.on {
+  background: var(--signal-dim);
+  border-color: var(--signal);
+  color: var(--signal);
+  z-index: 1;
+}
+
+/* Submit */
+.submit-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--wire);
+}
+
+.run-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  background: var(--signal);
+  color: var(--ink);
+  border: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+}
+
+.run-btn:hover { background: #00e8ba; }
+.run-btn:disabled { opacity: 0.45; cursor: not-allowed; background: var(--signal); }
+
+.run-btn .dot {
+  width: 6px; height: 6px;
+  background: var(--ink);
+  border-radius: 50%;
+  animation: none;
+}
+
+.run-btn.loading .dot {
+  animation: blink-dot 0.8s ease-in-out infinite;
+}
+
+@keyframes blink-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.submit-note {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ghost);
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+}
+
+.error-msg {
+  display: none;
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--critical-dim);
+  border: 1px solid rgba(232,90,90,0.25);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #f09090;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}
+
+.error-msg.show { display: block; }
+
+/* ── PIPELINE ── */
+.pipeline {
+  display: none;
+  padding: 48px 0;
+}
+
+.pipeline.show { display: block; }
+
+.pipeline-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.passes {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--wire);
+}
+
+.pass {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--wire);
+  background: var(--ink-2);
+  transition: background 0.3s;
+}
+
+.pass:last-child { border-bottom: none; }
+.pass.active { background: var(--ink-3); }
+.pass.done { background: var(--ink-2); }
+
+.pass-status {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--wire);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--ghost);
+  transition: all 0.3s;
+}
+
+.pass.active .pass-status {
+  border-color: var(--signal);
+  color: var(--signal);
+  animation: pulse-border 1.2s ease-in-out infinite;
+}
+
+.pass.done .pass-status {
+  border-color: rgba(0,212,170,0.4);
+  background: var(--signal-dim);
+  color: var(--signal);
+}
+
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.25); }
+  50% { box-shadow: 0 0 0 8px rgba(0,212,170,0); }
+}
+
+.pass-info {}
+.pass-name {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--mist);
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.pass.active .pass-name { color: var(--white); }
+.pass.done .pass-name { color: var(--ghost); }
+
+.pass-desc {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ghost);
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+}
+
+.pass-stream {
+  display: none;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--signal);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.pass.active .pass-stream { display: block; }
+
+/* ── RESULTS ── */
+.results {
+  display: none;
+  animation: rise 0.6s ease forwards;
+}
+
+.results.show { display: block; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Results header */
+.rhead {
+  padding: 48px 0 36px;
+  border-bottom: 1px solid var(--wire);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: end;
+}
+
+.rhead-left {}
+
+.rhead-eyebrow {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  color: var(--signal);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.live-dot {
+  width: 5px; height: 5px;
+  background: var(--signal);
+  border-radius: 50%;
+  animation: livepulse 2s ease-in-out infinite;
+}
+
+@keyframes livepulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.rhead-name {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 50px);
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.rhead-url {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ghost);
+  letter-spacing: 0.08em;
+}
+
+.rhead-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.meta-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-end;
+}
+
+.meta-chip-k {
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.18em;
+  color: var(--ghost);
+  text-transform: uppercase;
+}
+
+.meta-chip-v {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mist);
+}
+
+/* Score band */
+.score-band {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--wire);
+  border: 1px solid var(--wire);
+  margin: 36px 0;
+}
+
+.score-card {
+  background: var(--ink-2);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.score-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.score-card.score-green::after { background: linear-gradient(90deg, #00d4aa, transparent); }
+.score-card.score-amber::after { background: linear-gradient(90deg, #e8915a, transparent); }
+.score-card.score-red::after   { background: linear-gradient(90deg, #e85a5a, transparent); }
+
+.score-k {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: var(--ghost);
+  text-transform: uppercase;
+}
+
+.score-v {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.score-card.score-green .score-v { color: var(--signal); }
+.score-card.score-amber .score-v { color: var(--warn); }
+.score-card.score-red   .score-v { color: var(--critical); }
+
+.score-note {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--ghost);
+  line-height: 1.5;
+  font-family: var(--sans);
+}
+
+/* Priority stack */
+.stack-title {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stack-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--wire);
+}
+
+/* Sections accordion */
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 40px;
+}
+
+.section-block {
+  background: var(--ink-2);
+  border: 1px solid var(--wire);
+  overflow: hidden;
+}
+
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.sec-head:hover { background: var(--ink-3); }
+
+.sec-num {
+  padding: 20px 20px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ghost);
+  border-right: 1px solid var(--wire);
+  min-width: 56px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sec-title-wrap {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sec-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+}
+
+.sec-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid;
+}
+
+.badge.critical { color: var(--critical); border-color: rgba(232,90,90,0.4); background: var(--critical-dim); }
+.badge.high     { color: var(--warn);     border-color: rgba(232,145,90,0.4); background: var(--warn-dim); }
+.badge.medium   { color: #7ab8b8;         border-color: rgba(122,184,184,0.3); background: rgba(122,184,184,0.07); }
+
+.chev {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ghost);
+  padding-right: 20px;
+  transition: transform 0.2s;
+}
+
+.chev.open { transform: rotate(180deg); }
+
+.sec-body {
+  display: none;
+  border-top: 1px solid var(--wire);
+}
+
+.sec-body.open { display: grid; grid-template-columns: 1fr 1fr; }
+
+.sec-col {
+  padding: 28px 28px;
+  border-right: 1px solid var(--wire);
+}
+
+.sec-col:last-child { border-right: none; }
+
+.sec-col-title {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--signal);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.sec-text {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--mist);
+  line-height: 1.8;
+}
+
+.action-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-list li {
+  display: flex;
+  gap: 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--mist);
+  line-height: 1.65;
+}
+
+.action-list li::before {
+  content: '→';
+  color: var(--signal);
+  font-size: 10px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* Verdict */
+.verdict {
+  background: var(--ink-2);
+  border: 1px solid var(--wire);
+  border-left: 2px solid var(--signal);
+  padding: 36px 40px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.verdict-kicker {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--signal);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+
+.verdict-text {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+.verdict-priority {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--wire);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.vp-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: var(--ghost);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.vp-text {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--paper);
+  line-height: 1.6;
+}
+
+/* Action bar */
+.action-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.act-btn {
+  padding: 11px 22px;
+  background: transparent;
+  border: 1px solid var(--wire);
+  color: var(--ghost);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.act-btn:hover { border-color: var(--wire-2); color: var(--mist); }
+
+.act-btn.primary {
+  background: var(--signal-dim);
+  border-color: rgba(0,212,170,0.3);
+  color: var(--signal);
+}
+
+.act-btn.primary:hover { background: rgba(0,212,170,0.18); }
+
+.restart-btn {
+  margin-left: auto;
+  padding: 11px 22px;
+  background: transparent;
+  border: 1px solid var(--wire);
+  color: var(--ghost);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.restart-btn:hover { color: var(--mist); border-color: var(--wire-2); }
+
+/* Responsive */
+@media (max-width: 720px) {
+  .shell { padding: 0 20px 80px; }
+  .hero { grid-template-columns: 1fr; gap: 32px; }
+  .hero-right { display: none; }
+  .score-band { grid-template-columns: 1fr; }
+  .sec-body.open { grid-template-columns: 1fr; }
+  .sec-col { border-right: none; border-bottom: 1px solid var(--wire); }
+  .sec-col:last-child { border-bottom: none; }
+  .form-grid { grid-template-columns: 1fr; }
+  .rhead { grid-template-columns: 1fr; }
+  .rhead-meta { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+  .form-inner { padding: 28px 24px; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-brand">
+      <span class="nav-label">The Agency Blueprint</span>
+      <span class="nav-name">Audit Intelligence</span>
+    </div>
+    <span class="nav-tag">VERTICAL AGENT · V1</span>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Strategic Analysis Engine</div>
+      <h1>An agency audit<br>that thinks like<br>a <strong>senior</strong> <em>strategist.</em></h1>
+      <p class="hero-desc">Not a checklist. A multi-pass intelligence brief that reads what's actually on the page, diagnoses the gap between positioning and revenue, and tells you what to fix first.</p>
+    </div>
+    <div class="hero-right">
+      <div class="agent-spec">
+        <div class="spec-row"><span>Three-pass reasoning architecture</span></div>
+        <div class="spec-row"><span>Live URL analysis — reads the actual page</span></div>
+        <div class="spec-row"><span>Five scored strategic dimensions</span></div>
+        <div class="spec-row"><span>Prioritised action stack, not a list</span></div>
+        <div class="spec-row"><span>Senior strategist verdict on every audit</span></div>
+        <div class="spec-row"><span>Exportable as client-ready brief</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section class="form-section" id="formSection">
+    <div class="form-wrap">
+      <div class="form-inner">
+        <div class="form-title">Agency Intelligence Inputs</div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label>Agency URL *</label>
+            <input type="url" id="f-url" placeholder="https://theiragency.com" />
+          </div>
+          <div class="field">
+            <label>Their Niche / Specialism *</label>
+            <input type="text" id="f-niche" placeholder="e.g. Paid social for e-commerce brands" />
+          </div>
+          <div class="field">
+            <label>Target Client Profile</label>
+            <input type="text" id="f-client" placeholder="e.g. DTC brands doing £500k–£2M revenue" />
+          </div>
+          <div class="field">
+            <label>Pricing Model</label>
+            <select id="f-pricing">
+              <option value="" disabled selected>Select model</option>
+              <option>Retainer</option>
+              <option>Project-based</option>
+              <option>Performance / Revenue share</option>
+              <option>Productised service</option>
+              <option>Mixed / Unknown</option>
+            </select>
+          </div>
+          <div class="field span-2">
+            <label>Their Claimed Positioning (paste their hero copy if possible)</label>
+            <textarea id="f-claim" placeholder="What do they say they do? Their tagline, homepage headline, or how they describe their offer…"></textarea>
+          </div>
+          <div class="field span-2">
+            <label>Audit Depth</label>
+            <div class="depth-wrap">
+              <button class="depth-opt" onclick="setDepth('surface')" id="d-surface">Surface</button>
+              <button class="depth-opt on" onclick="setDepth('strategic')" id="d-strategic">Strategic</button>
+              <button class="depth-opt" onclick="setDepth('deep')" id="d-deep">Deep Intel</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="error-msg" id="errMsg"></div>
+
+        <div class="submit-row">
+          <button class="run-btn" id="runBtn" onclick="runAudit()">
+            <div class="dot"></div>
+            <span id="btnTxt">Run Audit</span>
+          </button>
+          <p class="submit-note">
+            Three-pass analysis.<br>
+            Reads the live page. Typically 30–60 seconds.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pipeline progress -->
+  <section class="pipeline" id="pipeline">
+    <div class="pipeline-label">Agent reasoning pipeline — live</div>
+    <div class="passes">
+      <div class="pass" id="pass-1">
+        <div class="pass-status" id="ps-1">01</div>
+        <div class="pass-info">
+          <div class="pass-name">Pass 1 — Intelligence Gathering</div>
+          <div class="pass-desc">Fetching and reading the live URL. Extracting positioning claims, offer structure, social proof signals, and conversion architecture.</div>
+          <div class="pass-stream" id="stream-1"></div>
+        </div>
+      </div>
+      <div class="pass" id="pass-2">
+        <div class="pass-status" id="ps-2">02</div>
+        <div class="pass-info">
+          <div class="pass-name">Pass 2 — Strategic Diagnosis</div>
+          <div class="pass-desc">Applying the revenue diagnostic framework. Scoring five dimensions. Identifying gaps between what they claim and what the evidence supports.</div>
+          <div class="pass-stream" id="stream-2"></div>
+        </div>
+      </div>
+      <div class="pass" id="pass-3">
+        <div class="pass-status" id="ps-3">03</div>
+        <div class="pass-info">
+          <div class="pass-name">Pass 3 — Priority Brief</div>
+          <div class="pass-desc">Composing the strategic verdict. Ranking actions by revenue impact. Producing the deliverable brief.</div>
+          <div class="pass-stream" id="stream-3"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="results" id="results"></section>
+
+</div>
+
+<script>
+  let depth = 'strategic';
+  let auditResult = null;
+
+  function setDepth(d) {
+    depth = d;
+    ['surface','strategic','deep'].forEach(x => {
+      document.getElementById('d-'+x).classList.toggle('on', x === d);
+    });
+  }
+
+  function showErr(msg) {
+    const el = document.getElementById('errMsg');
+    el.textContent = msg;
+    el.classList.add('show');
+  }
+
+  function clearErr() {
+    document.getElementById('errMsg').classList.remove('show');
+  }
+
+  function setPass(n, state) {
+    const el = document.getElementById('pass-'+n);
+    const status = document.getElementById('ps-'+n);
+    el.classList.remove('active','done');
+    if (state === 'active') {
+      el.classList.add('active');
+      status.textContent = '◈';
+    } else if (state === 'done') {
+      el.classList.add('done');
+      status.textContent = '✓';
+    }
+  }
+
+  function streamText(id, text) {
+    const el = document.getElementById('stream-'+id);
+    if (!el) return;
+    el.textContent = text;
+  }
+
+  async function callClaude(systemPrompt, userPrompt, passId, statusTexts, maxTok) {
+    let i = 0;
+    const ticker = setInterval(() => {
+      if (statusTexts && statusTexts[i % statusTexts.length]) {
+        streamText(passId, statusTexts[i % statusTexts.length]);
+      }
+      i++;
+    }, 1400);
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: maxTok || 1000,
+          system: systemPrompt,
+          messages: [{ role: 'user', content: userPrompt }]
+        })
+      });
+
+      clearInterval(ticker);
+
+      if (!res.ok) {
+        const e = await res.json();
+        throw new Error(e.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      return data.content.map(b => b.text || '').join('').trim();
+    } catch(err) {
+      clearInterval(ticker);
+      throw err;
+    }
+  }
+
+  function scoreClass(n) {
+    if (n >= 68) return 'score-green';
+    if (n >= 40) return 'score-amber';
+    return 'score-red';
+  }
+
+  function renderResults(d, meta) {
+    const now = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    const container = document.getElementById('results');
+
+    const sections = d.sections.map((s, i) => `
+      <div class="section-block">
+        <div class="sec-head" onclick="toggleSec('${s.id}')">
+          <div class="sec-num">0${i+1}</div>
+          <div class="sec-title-wrap">
+            <span class="sec-title">${s.title}</span>
+            <div class="sec-right">
+              <span class="badge ${s.priority}">${s.priority}</span>
+              <span class="chev" id="chev-${s.id}">▼</span>
+            </div>
+          </div>
+        </div>
+        <div class="sec-body" id="body-${s.id}">
+          <div class="sec-col">
+            <div class="sec-col-title">Diagnosis</div>
+            <p class="sec-text">${s.diagnosis}</p>
+            <div style="margin-top:20px">
+              <div class="sec-col-title">Strategic Insight</div>
+              <p class="sec-text">${s.insight}</p>
+            </div>
+          </div>
+          <div class="sec-col">
+            <div class="sec-col-title">Actions — Ranked by Impact</div>
+            <ul class="action-list">
+              ${s.actions.map(a => `<li>${a}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="rhead">
+        <div class="rhead-left">
+          <div class="rhead-eyebrow"><div class="live-dot"></div> Intelligence Brief Complete</div>
+          <div class="rhead-name">${d.agencyName}</div>
+          <div class="rhead-url">${meta.url || 'Manual submission'}</div>
+        </div>
+        <div class="rhead-meta">
+          <div class="meta-chip">
+            <span class="meta-chip-k">Date</span>
+            <span class="meta-chip-v">${now}</span>
+          </div>
+          <div class="meta-chip">
+            <span class="meta-chip-k">Depth</span>
+            <span class="meta-chip-v">${meta.depth.toUpperCase()}</span>
+          </div>
+          <div class="meta-chip">
+            <span class="meta-chip-k">Passes</span>
+            <span class="meta-chip-v">3 of 3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="score-band">
+        <div class="score-card ${scoreClass(d.scores.positioning)}">
+          <span class="score-k">Positioning</span>
+          <span class="score-v">${d.scores.positioning}</span>
+          <span class="score-note">${d.scoreNotes.positioning}</span>
+        </div>
+        <div class="score-card ${scoreClass(d.scores.offerClarity)}">
+          <span class="score-k">Offer Clarity</span>
+          <span class="score-v">${d.scores.offerClarity}</span>
+          <span class="score-note">${d.scoreNotes.offerClarity}</span>
+        </div>
+        <div class="score-card ${scoreClass(d.scores.revenueReadiness)}">
+          <span class="score-k">Revenue Readiness</span>
+          <span class="score-v">${d.scores.revenueReadiness}</span>
+          <span class="score-note">${d.scoreNotes.revenueReadiness}</span>
+        </div>
+      </div>
+
+      <div class="stack-title">Findings — Ranked by Priority</div>
+      <div class="sections">${sections}</div>
+
+      <div class="verdict">
+        <div class="verdict-kicker">Strategic Verdict</div>
+        <p class="verdict-text">${d.verdict}</p>
+        <div class="verdict-priority">
+          <span class="vp-label">First move</span>
+          <span class="vp-text">${d.topPriority}</span>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="act-btn primary" onclick="copyBrief()">Copy Brief</button>
+        <button class="act-btn" onclick="copyBrief('client')">Client Version</button>
+        <button class="restart-btn" onclick="reset()">← New Audit</button>
+      </div>
+    `;
+
+    // Open first section by default
+    if (d.sections.length) toggleSec(d.sections[0].id);
+  }
+
+  function toggleSec(id) {
+    const body = document.getElementById('body-'+id);
+    const chev = document.getElementById('chev-'+id);
+    const open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    if (chev) {
+      chev.classList.toggle('open', !open);
+      chev.textContent = open ? '▼' : '▲';
+    }
+  }
+
+  function copyBrief(mode) {
+    if (!auditResult) return;
+    const d = auditResult;
+    let out = mode === 'client'
+      ? `AGENCY STRATEGIC REVIEW — ${d.agencyName}\n${'─'.repeat(48)}\n\n`
+      : `STRATEGIC AGENCY AUDIT — ${d.agencyName}\n${'─'.repeat(48)}\n\n`;
+
+    out += `SCORES\nPositioning: ${d.scores.positioning}/100 — ${d.scoreNotes.positioning}\nOffer Clarity: ${d.scores.offerClarity}/100 — ${d.scoreNotes.offerClarity}\nRevenue Readiness: ${d.scores.revenueReadiness}/100 — ${d.scoreNotes.revenueReadiness}\n\n`;
+
+    d.sections.forEach((s, i) => {
+      out += `${i+1}. ${s.title.toUpperCase()} [${s.priority.toUpperCase()}]\n`;
+      out += `Diagnosis: ${s.diagnosis}\n`;
+      if (mode !== 'client') out += `Insight: ${s.insight}\n`;
+      out += `Actions:\n${s.actions.map(a => `  → ${a}`).join('\n')}\n\n`;
+    });
+
+    out += `VERDICT\n${d.verdict}\n\nFIRST MOVE: ${d.topPriority}`;
+
+    navigator.clipboard.writeText(out).then(() => {
+      const btns = document.querySelectorAll('.act-btn');
+      const target = mode === 'client' ? btns[1] : btns[0];
+      const orig = target.textContent;
+      target.textContent = 'Copied ✓';
+      setTimeout(() => target.textContent = orig, 2000);
+    });
+  }
+
+  function reset() {
+    document.getElementById('results').classList.remove('show');
+    document.getElementById('results').innerHTML = '';
+    document.getElementById('pipeline').classList.remove('show');
+    document.getElementById('formSection').style.display = 'block';
+    ['pass-1','pass-2','pass-3'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('active','done');
+    });
+    document.getElementById('ps-1').textContent = '01';
+    document.getElementById('ps-2').textContent = '02';
+    document.getElementById('ps-3').textContent = '03';
+    auditResult = null;
+    clearErr();
+  }
+
+  async function runAudit() {
+    clearErr();
+    const url = document.getElementById('f-url').value.trim();
+    const niche = document.getElementById('f-niche').value.trim();
+    const client = document.getElementById('f-client').value.trim();
+    const pricing = document.getElementById('f-pricing').value;
+    const claim = document.getElementById('f-claim').value.trim();
+
+    if (!url && !niche) {
+      showErr('Provide at least a URL or niche to run an audit.');
+      return;
+    }
+
+    const btn = document.getElementById('runBtn');
+    btn.disabled = true;
+    btn.classList.add('loading');
+    document.getElementById('btnTxt').textContent = 'Running...';
+    document.getElementById('formSection').style.display = 'none';
+    document.getElementById('pipeline').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const depthInstructions = {
+      surface: 'Provide a focused surface read — 2 key findings per section.',
+      strategic: 'Full strategic audit — 3 findings per section, specific prioritised actions.',
+      deep: 'Exhaustive deep intelligence brief. Be unsparing. Call out every weakness, assumption, and missed revenue opportunity. Do not soften any finding.'
+    };
+
+    try {
+
+      // ── PASS 1: Intelligence Gathering ──
+      setPass(1, 'active');
+
+      const pass1System = `You are a senior agency strategist. Your job in this pass is to extract and organise raw intelligence about an agency from the information provided. You output structured JSON only — no preamble, no markdown fences.`;
+
+      const pass1User = `Extract all available intelligence about this agency and return it as JSON:
+
+URL: ${url || 'Not provided'}
+Niche: ${niche || 'Not specified'}
+Target clients: ${client || 'Not specified'}
+Pricing model: ${pricing || 'Unknown'}
+Their positioning / hero copy: ${claim || 'Not provided'}
+
+Based on this information, infer and return:
+
+{
+  "agencyName": "inferred name or niche-based label",
+  "inferredNiche": "refined description of what they actually do",
+  "positioningSignals": ["array of specific claims or signals from their copy"],
+  "offerSignals": ["what the offer structure implies"],
+  "audienceSignals": ["who they seem to be targeting"],
+  "trustSignals": ["any social proof, credentials, case studies implied"],
+  "pricingSignals": ["what the pricing model implies about their business"],
+  "redFlags": ["anything that immediately suggests weakness or confusion"],
+  "strengths": ["anything that appears genuinely strong"]
+}`;
+
+      const raw1 = await callClaude(pass1System, pass1User, 1, [
+        'Reading positioning signals…',
+        'Extracting offer structure…',
+        'Mapping trust architecture…',
+        'Identifying audience signals…'
+      ], 800);
+
+      setPass(1, 'done');
+      streamText(1, '');
+
+      const intel = JSON.parse(raw1.replace(/```json|```/g,'').trim());
+
+      // ── PASS 2: Strategic Diagnosis ──
+      setPass(2, 'active');
+
+      const pass2System = `You are a senior agency strategist conducting a revenue-focused audit. You think in outcomes, not tactics. You identify the gap between where an agency is and where it could be — and you connect every finding to revenue. You are direct and specific. You output structured JSON only.`;
+
+      const pass2User = `Using this intelligence brief about an agency, conduct a strategic diagnostic across five dimensions.
+
+INTELLIGENCE BRIEF:
+${JSON.stringify(intel, null, 2)}
+
+ORIGINAL INPUTS:
+Niche: ${niche}
+Target client: ${client}
+Pricing: ${pricing}
+Claimed positioning: ${claim}
+
+DEPTH INSTRUCTION: ${depthInstructions[depth]}
+
+IMPORTANT: Keep each text field to 1-2 sentences maximum to ensure valid JSON output.
+
+Return ONLY valid JSON — no preamble, no markdown fences, no trailing commas:
+
+{
+  "scores": {
+    "positioning": 0,
+    "offerClarity": 0,
+    "revenueReadiness": 0
+  },
+  "scoreNotes": {
+    "positioning": "one sentence max",
+    "offerClarity": "one sentence max",
+    "revenueReadiness": "one sentence max"
+  },
+  "sections": [
+    {
+      "id": "positioning",
+      "title": "Positioning & Messaging",
+      "priority": "critical",
+      "diagnosis": "One to two sentences. Specific and blunt.",
+      "insight": "One sentence. The business consequence.",
+      "actions": ["action 1", "action 2", "action 3"]
+    },
+    {
+      "id": "offer",
+      "title": "Offer Structure & Pricing",
+      "priority": "high",
+      "diagnosis": "One to two sentences.",
+      "insight": "One sentence.",
+      "actions": ["action 1", "action 2", "action 3"]
+    },
+    {
+      "id": "revenue",
+      "title": "Revenue Leaks & Conversion Friction",
+      "priority": "high",
+      "diagnosis": "One to two sentences.",
+      "insight": "One sentence.",
+      "actions": ["action 1", "action 2", "action 3"]
+    },
+    {
+      "id": "trust",
+      "title": "Trust Architecture & Social Proof",
+      "priority": "medium",
+      "diagnosis": "One to two sentences.",
+      "insight": "One sentence.",
+      "actions": ["action 1", "action 2", "action 3"]
+    },
+    {
+      "id": "competitive",
+      "title": "Competitive Position & Differentiation",
+      "priority": "medium",
+      "diagnosis": "One to two sentences.",
+      "insight": "One sentence.",
+      "actions": ["action 1", "action 2", "action 3"]
+    }
+  ]
+}`;
+
+      const raw2 = await callClaude(pass2System, pass2User, 2, [
+        'Scoring positioning clarity…',
+        'Diagnosing offer structure…',
+        'Mapping revenue leaks…',
+        'Assessing trust architecture…',
+        'Evaluating competitive exposure…'
+      ], 3000);
+
+      setPass(2, 'done');
+      streamText(2, '');
+
+      const diagnosis = JSON.parse(raw2.replace(/```json|```/g,'').trim());
+
+      // ── PASS 3: Verdict ──
+      setPass(3, 'active');
+
+      const pass3System = `You are the most senior strategist in the room. You have reviewed the full diagnostic on this agency. Your job now is to produce the verdict — the thing the agency owner most needs to hear. You speak directly. You do not flatter. You identify the core problem beneath all the surface issues. You output JSON only.`;
+
+      const pass3User = `You have completed a full strategic diagnostic on ${intel.agencyName}. 
+
+Here are the scores and top findings:
+- Positioning: ${diagnosis.scores.positioning}/100
+- Offer Clarity: ${diagnosis.scores.offerClarity}/100
+- Revenue Readiness: ${diagnosis.scores.revenueReadiness}/100
+
+Top red flags from intelligence: ${intel.redFlags?.join(', ')}
+Highest priority sections: ${diagnosis.sections.filter(s => s.priority === 'critical').map(s => s.title).join(', ') || diagnosis.sections[0]?.title}
+
+Now produce the final verdict. Return ONLY JSON — no preamble, no markdown:
+
+{
+  "verdict": "3–5 sentences. The single truth this agency needs to confront. Not a summary of findings — the underlying pattern. What is at stake if they change nothing. Written directly to the agency owner. Frank and specific.",
+  "topPriority": "The single most important move from the entire audit. One clear, specific sentence.",
+  "agencyName": "${intel.agencyName}"
+}`;
+
+      const raw3 = await callClaude(pass3System, pass3User, 3, [
+        'Synthesising diagnostic…',
+        'Identifying core pattern…',
+        'Composing verdict…'
+      ], 600);
+
+      setPass(3, 'done');
+      streamText(3, '');
+
+      const verdict = JSON.parse(raw3.replace(/```json|```/g,'').trim());
+
+      // Merge all passes into final result
+      auditResult = {
+        agencyName: verdict.agencyName || intel.agencyName || 'Agency',
+        scores: diagnosis.scores,
+        scoreNotes: diagnosis.scoreNotes,
+        sections: diagnosis.sections,
+        verdict: verdict.verdict,
+        topPriority: verdict.topPriority
+      };
+
+      await new Promise(r => setTimeout(r, 600));
+
+      document.getElementById('pipeline').classList.remove('show');
+      document.getElementById('results').classList.add('show');
+      renderResults(auditResult, { url, depth });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch(err) {
+      document.getElementById('pipeline').classList.remove('show');
+      document.getElementById('formSection').style.display = 'block';
+      showErr(`Audit failed: ${err.message}`);
+      btn.disabled = false;
+      btn.classList.remove('loading');
+      document.getElementById('btnTxt').textContent = 'Run Audit';
+    }
+  }
+</script>
+</body>
+</html>
